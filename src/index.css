@@ -87,113 +87,135 @@ h1 {
   position: relative;
   background-color: #040404;
   margin-bottom: 8px; }
-  .country__rank {
-    margin-left: auto;
-    margin-right: 0;
-    font-size: 13px;
-    color: #2b2b2b;
-    padding-top: 4px;
-    display: inline-block; }
-  .country__name {
-    font-size: 16px;
-    padding: 8px 0 7px;
-    font-family: "Intro"; }
-  .country__flag {
-    vertical-align: middle;
-    margin: 0;
-    margin-right: 0;
-    padding: 8px; }
-    .country__flag img {
-      display: block;
-      width: 28px;
-      height: 20px;
-      filter: saturate(1.5); }
-  .country__average {
-    text-align: right;
-    padding: 8px 12px 6px;
-    width: 72px;
-    background-color: transparent;
-    font-size: 16px;
-    display: block;
-    text-align: right; }
-  .country--qualified {
-    opacity: 0.2; }
-  .country--small {
-    box-shadow: none;
-    font-size: 10px;
-    transition: 0.4s ease;
-    margin: 0 0 4px;
-    background-color: #111;
-    color: white; }
-    .country--small .country__rank {
-      padding: 0 8px;
-      float: right;
-      margin-left: auto;
-      margin-right: 0;
-      font-size: 10px;
-      color: white; }
-    .country--small .country__name {
-      padding: 1px 0;
-      font-family: "Gotham";
-      font-size: 10px;
-      text-transform: capitalize; }
-    .country--small .country__flag {
-      margin-right: 4px;
-      padding: 2px; }
-      .country--small .country__flag img {
-        width: 16px;
-        height: 12px; }
-    .country--small:hover {
-      opacity: 0.5;
-      cursor: pointer; }
-  .country--1, .country--2, .country--3 {
-    position: relative; }
-    .country--1 .country__name:after, .country--2 .country__name:after, .country--3 .country__name:after {
-      content: "";
-      margin-left: 8px;
-      vertical-align: middle;
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:24px;height:24px' viewBox='0 0 24 24'%3E%3Cpath fill='%23EC1D24' d='M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z' /%3E%3C/svg%3E"); }
-    .country--1 .country__current-rank, .country--2 .country__current-rank, .country--3 .country__current-rank {
-      width: 36px;
-      height: 36px;
-      line-height: 36px;
-      text-align: center;
-      position: absolute;
-      left: 0;
-      top: 0;
-      font-size: 16px;
-      font-weight: 700;
-      z-index: 5;
-      border: none;
-      background-color: #EC1D24;
-      color: #111; }
-      .country--1 .country__current-rank + .country__flag, .country--2 .country__current-rank + .country__flag, .country--3 .country__current-rank + .country__flag {
-        visibility: hidden; }
-  .country--3 {
-    background-color: #EC1D24;
-    color: #111; }
-    .country--3 .country__rank {
-      color: #111; }
-    .country--3 .country__current-rank {
-      background-color: white;
-      color: #111; }
-    .country--3 .country__name {
-      color: #111; }
-      .country--3 .country__name:after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:24px;height:24px' viewBox='0 0 24 24'%3E%3Cpath fill='%23111' d='M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z' /%3E%3C/svg%3E"); }
+
+.country__rank {
+  margin-left: auto;
+  margin-right: 0;
+  font-size: 13px;
+  color: #2b2b2b;
+  padding-top: 4px;
+  display: inline-block; }
+
+.country__name {
+  font-size: 16px;
+  padding: 8px 0 7px;
+  font-family: "Intro"; }
+
+.country__flag {
+  vertical-align: middle;
+  margin: 0;
+  margin-right: 0;
+  padding: 8px; }
+
+.country__flag img {
+  display: block;
+  width: 28px;
+  height: 20px;
+  filter: saturate(1.5); }
+
+.country__average {
+  text-align: right;
+  padding: 8px 12px 6px;
+  width: 72px;
+  background-color: transparent;
+  font-size: 16px;
+  display: block;
+  text-align: right; }
+
+.country--qualified {
+  opacity: 0.2; }
+
+.country--small {
+  box-shadow: none;
+  font-size: 10px;
+  transition: 0.4s ease;
+  margin: 0 0 4px;
+  background-color: #111;
+  color: white; }
+
+.country--small .country__rank {
+  padding: 0 8px;
+  float: right;
+  margin-left: auto;
+  margin-right: 0;
+  font-size: 10px;
+  color: white; }
+
+.country--small .country__name {
+  padding: 1px 0;
+  font-family: "Gotham";
+  font-size: 10px;
+  text-transform: capitalize; }
+
+.country--small .country__flag {
+  margin-right: 4px;
+  padding: 2px; }
+
+.country--small .country__flag img {
+  width: 16px;
+  height: 12px; }
+
+.country--small:hover {
+  opacity: 0.5;
+  cursor: pointer; }
+
+.country--1, .country--2, .country--3 {
+  position: relative; }
+
+.country--1 .country__name:after, .country--2 .country__name:after, .country--3 .country__name:after {
+  content: "";
+  margin-left: 8px;
+  vertical-align: middle;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:24px;height:24px' viewBox='0 0 24 24'%3E%3Cpath fill='%23EC1D24' d='M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z' /%3E%3C/svg%3E"); }
+
+.country--1 .country__current-rank, .country--2 .country__current-rank, .country--3 .country__current-rank {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 16px;
+  font-weight: 700;
+  z-index: 5;
+  border: none;
+  background-color: #EC1D24;
+  color: #111; }
+
+.country--1 .country__current-rank + .country__flag, .country--2 .country__current-rank + .country__flag, .country--3 .country__current-rank + .country__flag {
+  visibility: hidden; }
+
+.country--3 {
+  background-color: #EC1D24;
+  color: #111; }
+
+.country--3 .country__rank {
+  color: #111; }
+
+.country--3 .country__current-rank {
+  background-color: white;
+  color: #111; }
+
+.country--3 .country__name {
+  color: #111; }
+
+.country--3 .country__name:after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:24px;height:24px' viewBox='0 0 24 24'%3E%3Cpath fill='%23111' d='M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z' /%3E%3C/svg%3E"); }
 
 .Scoreboard {
   display: flex;
   align-items: center;
   padding: 24px;
   background-color: #111; }
-  .Scoreboard > div {
-    columns: 2;
-    column-gap: 8px;
-    width: 100%; }
+
+.Scoreboard > div {
+  columns: 2;
+  column-gap: 8px;
+  width: 100%; }
 
 button {
   appearance: none;
@@ -208,11 +230,13 @@ button {
   text-transform: capitalize;
   margin: 0 8px 8px 0;
   transition: 0.4s ease; }
-  button:focus {
-    outline: none; }
-  button:hover {
-    opacity: 0.75;
-    cursor: pointer; }
+
+button:focus {
+  outline: none; }
+
+button:hover {
+  opacity: 0.75;
+  cursor: pointer; }
 
 .Button--12 {
   background-color: #EC1D24;
@@ -220,31 +244,36 @@ button {
 
 #picker {
   padding: 48px; }
-  #picker .country {
-    display: inline-block;
-    margin: 0 8px 8px 0;
-    background-color: white;
-    color: black;
-    border: none; }
-    #picker .country__flag {
-      display: inline-block;
-      padding: 0;
-      vertical-align: middle;
-      margin: 0 6px 0 4px; }
-    #picker .country__name {
-      display: inline-block;
-      padding: 6px 8px 6px 0;
-      text-transform: uppercase;
-      font-family: "Gotham"; }
-    #picker .country__name2 {
-      display: inline-block;
-      padding: 4px 6px 4px 6px;
-      text-transform: uppercase;
-      font-family: "Gotham"; }
-  #picker > button {
-    float: right;
-    font-size: 11px;
-    margin-top: 24px; }
+
+#picker .country {
+  display: inline-block;
+  margin: 0 8px 8px 0;
+  background-color: white;
+  color: black;
+  border: none; }
+
+#picker .country__flag {
+  display: inline-block;
+  padding: 0;
+  vertical-align: middle;
+  margin: 0 6px 0 4px; }
+
+#picker .country__name {
+  display: inline-block;
+  padding: 6px 8px 6px 0;
+  text-transform: uppercase;
+  font-family: "Gotham"; }
+
+#picker .country__name2 {
+  display: inline-block;
+  padding: 4px 6px 4px 6px;
+  text-transform: uppercase;
+  font-family: "Gotham"; }
+
+#picker > button {
+  float: right;
+  font-size: 11px;
+  margin-top: 24px; }
 
 .vote {
   background-color: #040404;
@@ -252,20 +281,24 @@ button {
   position: relative;
   padding: 4px 8px;
   margin-bottom: 8px; }
-  .vote .country {
-    margin-bottom: 0; }
-    .vote .country__name {
-      font-size: 16px;
-      font-family: "Intro"; }
-    .vote .country--small {
-      background-color: transparent; }
-  .vote:after {
-    content: counter(count);
-    font-size: 13px;
-    position: absolute;
-    top: 50%;
-    right: 12px;
-    transform: translateY(-50%); }
+
+.vote .country {
+  margin-bottom: 0; }
+
+.vote .country__name {
+  font-size: 16px;
+  font-family: "Intro"; }
+
+.vote .country--small {
+  background-color: transparent; }
+
+.vote:after {
+  content: counter(count);
+  font-size: 13px;
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%); }
 
 .votingPanel {
   padding: 24px;
@@ -273,44 +306,54 @@ button {
   margin: 0 auto;
   counter-set: count;
   max-width: 480px; }
-  @media only screen and (max-width: 720px) {
-    .votingPanel {
-      max-width: 100%; } }
-  .votingPanel h2 {
-    margin: 0 0 8px;
-    font-size: 16px;
-    display: none; }
-  .votingPanel .Dropdown-root {
-    margin-bottom: 24px; }
-  .votingPanel .Dropdown-control {
-    font-size: 13px;
-    padding: 8px 52px 6px 10px;
-    border: none;
-    border-radius: 0;
-    background-color: #dd1319;
-    color: white;
-    font-family: "Intro"; }
-  .votingPanel .Dropdown-arrow {
-    top: 12px;
-    border-color: white transparent transparent; }
-  .votingPanel .Dropdown-menu {
-    border: none;
-    font-size: 13px;
-    background-color: black; }
-  .votingPanel .Dropdown-option {
-    color: white;
-    font-family: "Intro"; }
-    .votingPanel .Dropdown-option:hover {
-      background-color: #EC1D24; }
-    .votingPanel .Dropdown-option.is-selected {
-      background-color: #111; }
-  .votingPanel button {
-    background-color: #EC1D24;
-    font-size: 16px;
-    margin-top: 8px;
-    width: 100%;
-    display: block;
-    font-family: "Intro"; }
+
+@media only screen and (max-width: 720px) {
+  .votingPanel {
+    max-width: 100%; } }
+
+.votingPanel h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  display: none; }
+
+.votingPanel .Dropdown-root {
+  margin-bottom: 24px; }
+
+.votingPanel .Dropdown-control {
+  font-size: 13px;
+  padding: 8px 52px 6px 10px;
+  border: none;
+  border-radius: 0;
+  background-color: #dd1319;
+  color: white;
+  font-family: "Intro"; }
+
+.votingPanel .Dropdown-arrow {
+  top: 12px;
+  border-color: white transparent transparent; }
+
+.votingPanel .Dropdown-menu {
+  border: none;
+  font-size: 13px;
+  background-color: black; }
+
+.votingPanel .Dropdown-option {
+  color: white;
+  font-family: "Intro"; }
+
+.votingPanel .Dropdown-option:hover {
+  background-color: #EC1D24; }
+
+.votingPanel .Dropdown-option.is-selected {
+  background-color: #111; }
+
+.votingPanel button {
+  background-color: #EC1D24;
+  font-size: 16px;
+  margin-top: 8px;
+  width: 100%;
+  display: block;
+  font-family: "Intro"; }
 
 .results {
   display: grid;
@@ -321,74 +364,95 @@ button {
   padding: 64px 96px;
   position: relative;
   overflow: hidden; }
-  .results--done .results__video {
-    font-size: 0; }
-    .results--done .results__video:after {
-      content: "That's it!";
-      font-size: 48px; }
-  .results--done .results__qualifiers + button {
-    background-color: #040404;
-    font-size: 0;
-    pointer-events: none; }
-    .results--done .results__qualifiers + button:after {
-      content: "No more qualifiers";
-      font-size: 16px; }
-  .results__qualifiers {
-    columns: 2;
-    column-gap: 8px; }
-    .results__qualifiers + button {
-      background-color: #EC1D24;
-      width: 100%;
-      display: block;
-      font-size: 16px;
-      font-family: "Intro";
-      margin-top: 8px; }
-    .results__qualifiers .country--unknown .country__flag {
-      visibility: hidden; }
-  .results__right {
-    display: flex;
-    flex-flow: row wrap;
-    flex-flow: column nowrap;
-    justify-content: center;
-    padding: 24px;
-    background-color: #111;
-    grid-row: 1 / 3; }
-    .results__right h2 {
-      text-align: center; }
-  .results__left {
-    grid-row: 1 / 3;
-    background-color: #040404; }
-  .results__video {
-    overflow: hidden;
-    grid-row: 1 / 2;
-    height: 360px;
-    background-color: #EC1D24;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    font-family: "Intro";
-    font-size: 48px; }
-  .results__countries {
-    padding: 24px;
-    text-align: left;
-    position: relative;
-    grid-row: 2 / 3;
-    columns: 2;
-    column-gap: 8px; }
-    .results__countries .country {
-      margin-bottom: 8px;
-      background-color: #111; }
-      .results__countries .country__name {
-        padding: 4px 0 2px;
-        font-size: 12px;
-        font-family: "Intro"; }
-      .results__countries .country__flag {
-        padding: 0 0 0 6px; }
-        .results__countries .country__flag img {
-          width: 20px;
-          height: 12px; }
-  .results .qualifier__revealed {
-    position: absolute;
-    top: 64px;
-    left: 96px; }
+
+.results--done .results__video {
+  font-size: 0; }
+
+.results--done .results__video:after {
+  content: "That's it!";
+  font-size: 48px; }
+
+.results--done .results__qualifiers + button {
+  background-color: #040404;
+  font-size: 0;
+  pointer-events: none; }
+
+.results--done .results__qualifiers + button:after {
+  content: "No more qualifiers";
+  font-size: 16px; }
+
+.results__qualifiers {
+  columns: 2;
+  column-gap: 8px; }
+
+.results__qualifiers + button {
+  background-color: #EC1D24;
+  width: 100%;
+  display: block;
+  font-size: 16px;
+  font-family: "Intro";
+  margin-top: 8px; }
+
+.results__qualifiers .country--unknown .country__flag {
+  visibility: hidden; }
+
+.results__right {
+  display: flex;
+  flex-flow: row wrap;
+  flex-flow: column nowrap;
+  justify-content: center;
+  padding: 24px;
+  background-color: #111;
+  grid-row: 1 / 3; }
+
+.results__right h2 {
+  text-align: center; }
+
+.results__left {
+  grid-row: 1 / 3;
+  background-color: #040404; }
+
+.results__video {
+  overflow: hidden;
+  grid-row: 1 / 2;
+  height: 360px;
+  background-color: #EC1D24;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  font-family: "Intro";
+  font-size: 48px; }
+
+.results__countries {
+  padding: 24px;
+  text-align: left;
+  position: relative;
+  grid-row: 2 / 3;
+  columns: 2;
+  column-gap: 8px; }
+
+.results__countries .country {
+  margin-bottom: 8px;
+  background-color: #111; }
+
+.results__countries .country__name {
+  padding: 4px 0 2px;
+  font-size: 12px;
+  font-family: "Intro"; }
+
+.results__countries .country__flag {
+  padding: 0 0 0 6px; }
+
+.results__countries .country__flag img {
+  width: 20px;
+  height: 12px; }
+
+.results .qualifier__revealed {
+  position: absolute;
+  top: 64px;
+  left: 96px; }
+
+.flex-container {
+  display: flex;
+  flex-direction: column-reverse; }

@@ -6,7 +6,7 @@ import {
   countryNameMap,
   rankToPointsMap,
   all_voters,
-  get_countries,
+  get_countries, edition_id, num_of_qualifiers,
 } from "./constants";
 import FlipMove from "react-flip-move";
 import { saveAs } from "file-saver";
@@ -44,8 +44,40 @@ class Scoreboard extends Component {
       completedVoters: 0,
       lastVotedCountry: "",
       country_list: country_list,
+      fetched: false
     };
-    this.eventSource = new EventSource("http://localhost:5000/stream");
+    // this.eventSource = new EventSource("http://localhost:5000/stream");
+    this.getVotes()
+  }
+
+
+  getVotes() {
+    fetch(
+        "https://django-cloudrun-4fdxp3ewaq-ew.a.run.app/get_votes/" +
+        edition_id() +
+        "/"
+    )
+        .then((response) => response.json())
+        .then((data) => {
+          const results = data["results"]
+          let useful = {}
+          for (var voter in results) {
+            const ranking = results[voter]
+            let usersRanking = []
+            for (let i=0; i<ranking.length; i++){
+              if (ranking[i]["score"] <=10){
+                continue;
+              }
+              usersRanking[ranking[i]["entry"]] = ranking[i]["score"]
+            }
+            useful[voter.toLowerCase()] = usersRanking
+          }
+
+          this.setState({
+            result: useful,
+            fetched: true,
+          });
+        });
   }
 
   audioStuff(data){
@@ -211,20 +243,20 @@ class Scoreboard extends Component {
     });
   }
 
-  componentDidMount() {
-    this.eventSource.addEventListener("name", (e) => {
-      this.parseName(JSON.parse(e.data));
-    });
-    this.eventSource.addEventListener("vote", (e) => {
-      this.addVote(JSON.parse(e.data));
-    });
-    this.eventSource.addEventListener("reset", (e) => {
-      this.endvote();
-    });
-    this.eventSource.addEventListener("cancel", (e) => {
-      this.cancelCurrentVote();
-    });
-  }
+  // componentDidMount() {
+  //   this.eventSource.addEventListener("name", (e) => {
+  //     this.parseName(JSON.parse(e.data));
+  //   });
+  //   this.eventSource.addEventListener("vote", (e) => {
+  //     this.addVote(JSON.parse(e.data));
+  //   });
+  //   this.eventSource.addEventListener("reset", (e) => {
+  //     this.endvote();
+  //   });
+  //   this.eventSource.addEventListener("cancel", (e) => {
+  //     this.cancelCurrentVote();
+  //   });
+  // }
 
   getRanking() {
     let ranking = [];
@@ -342,7 +374,7 @@ class Scoreboard extends Component {
     // }
     return (
       <span>
-        <FlipMove enterLeaveAnimation="elevator">
+        <FlipMove enterLeaveAnimation="elevator" duration={600} staggerDurationBy={50} staggerDelayBy={300}>
           {ranked.map((value, index) => {
             return (
               // <span key={value[0]}><button key={value[0]} value={value[0]}  onClick={ e => this.popVote(e.target.value)} ><OngoingRankCountryComponent country={value[0]} rank={value[1]}/></button></span>
@@ -364,6 +396,9 @@ class Scoreboard extends Component {
   }
 
   render() {
+    if (!this.state.fetched){
+      return ("Wait a second")
+    }
     return (
       <div className="App">
         <div className={"Voting"}>
@@ -406,11 +441,34 @@ class Scoreboard extends Component {
             return (
               <button
                 value={name}
-                onClick={(e) => this.setState({ currentVoter: e.target.value })}
+                onClick={(e) => {
+                  let newState = {}
+                  newState["count"] = this.state.country_list.length
+
+                  const currentVoting = this.state.currentVoting
+                  this.cancelCurrentVote()
+
+                  if (name.toLowerCase() in this.state.result) {
+                    newState["currentVoting"] = this.state.result[name.toLowerCase()]
+                    newState["count"] = 10
+                    if (newState["currentVoter"] !== e.target.value) {
+                      let ranking = this.state.overallRanking;
+                      for (const country in newState["currentVoting"]) {
+                        let countryVoteList = ranking[country];
+                        const rank = newState["currentVoting"][country]
+                        console.log(country)
+                        countryVoteList.push(rank);
+                        ranking[country] = countryVoteList;
+                      }
+                    }
+                  }
+                  newState["currentVoter"] = e.target.value
+                  this.setState(newState)
+                }}
               >
                 {name}
               </button>
-            );
+            )
           })}
           <button
             className={"Button Button--12"}

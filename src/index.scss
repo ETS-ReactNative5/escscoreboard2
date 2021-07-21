@@ -512,3 +512,8 @@ button {
     left: 96px;
   }
 }
+
+.flex-container {
+  display: flex;
+  flex-direction: column-reverse;
+}
