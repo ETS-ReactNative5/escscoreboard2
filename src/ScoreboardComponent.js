@@ -15,7 +15,7 @@ class ScoreboardComponent extends Component {
         }
         const limit = Math.trunc(this.props.ranking.length/2)
         return(
-                <FlipMove duration={300} staggerDurationBy={20} staggerDelayBy={20} enterAnimation="elevator" leaveAnimation="elevator" appearAnimation={"accordionVertical"} >
+            <FlipMove duration={250} staggerDurationBy={20} staggerDelayBy={20} enterAnimation="elevator" leaveAnimation="elevator" appearAnimation={"accordionVertical"} >
                 {this.props.ranking
                     .sort((a,b) => {
                         if (this.props.twelvePointSystem){
