@@ -132,7 +132,7 @@ export const all_voters = [
   "Simon",
   "Thomas",
   //"Tommy",
-  //"Victoria",
+  "Victoria",
   "Vladan",
   "Wiv",
   //"Jelena",
