@@ -78,7 +78,7 @@ export const magic_code = "raging";
 
 export default countries;
 
-export const currentEdition = "16";
+export const currentEdition = "17";
 
 const edition_map = {
   yugo: 10,
