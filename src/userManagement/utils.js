@@ -73,3 +73,11 @@ export const renewToken = () => {
             return Promise.reject('failed to refresh')
         })
 }
+
+export const clearToken = () => {
+    localStorage.removeItem('Token')
+    localStorage.removeItem("RefreshToken")
+    localStorage.removeItem("LastRefreshTime")
+    localStorage.removeItem("HasBeenLoggedIn")
+
+}

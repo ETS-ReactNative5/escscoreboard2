@@ -21,26 +21,26 @@ export default function App() {
                     <Route path="/register">
                         <RegistrationForm />
                     </Route>
-                    <Route path="/scoreboard">
-                        <Scoreboard />
-                    </Route>
-                    <Route path="/users">
-                        <Users />
-                    </Route>
+                    {/*<Route path="/scoreboard">*/}
+                    {/*    <Scoreboard />*/}
+                    {/*</Route>*/}
+                    {/*<Route path="/users">*/}
+                    {/*    <Users />*/}
+                    {/*</Route>*/}
                     <Route path="/profile">
                         <Profile />
                     </Route>
-                    <Route path="/vote">
-                        <Vote />
-                    </Route>
-                    <Route path="/result">
-                        <Results />
-                    </Route>
-                    <Route path="/sort">
-                        <Ranker />
-                    </Route>
+                    {/*<Route path="/vote">*/}
+                    {/*    <Vote />*/}
+                    {/*</Route>*/}
+                    {/*<Route path="/result">*/}
+                    {/*    <Results />*/}
+                    {/*</Route>*/}
+                    {/*<Route path="/sort">*/}
+                    {/*    <Ranker />*/}
+                    {/*</Route>*/}
                     <Route exact path="/login" component={LoginForm} />
-                    {/*<ProtectedRoute exact path="/" component={Profile} />*/}
+                    <Route path="/" component={LoginForm} />
                     {/*<Route path="/">*/}
                     {/*    <Setup />*/}
                     {/*</Route>*/}

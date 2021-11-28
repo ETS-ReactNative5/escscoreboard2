@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import {authHeaders, jsonHeaders} from "./utils";
+import {authHeaders, clearToken, jsonHeaders, setHasUserBeenLoggedIn, storeRefreshToken, storeToken} from "./utils";
 import toast, { Toaster } from 'react-hot-toast';
 import {getFlagForCountryNew} from "../images";
 import {fullFlagMap} from "../constants";
@@ -37,12 +37,53 @@ const Profile = () => {
                     }
                 })
                 setFinalVotes(votes)
-                console.log(votes)
                 setLeaderboard(data[0].leaderboard.leaderboard)
                 setMyRank(data[0].leaderboard.my_ranking)
                 setMyScore(data[0].leaderboard.my_score)
             })
     }, [])
+
+    const history = useHistory();
+
+    const redirectToLogin = () =>{
+        let path = `login`;
+        history.push(path);
+    }
+
+    const logout = async (e) => {
+        // e.preventDefault()
+        clearToken()
+        redirectToLogin()
+    }
+
+    const countryBox = (nf) => {
+        return (
+            <div key={nf.id}>
+                <img src={getFlagForCountryNew(nf.country)} height={20}/>
+                <span> {nf.nf}</span>
+                <select
+                    onClick={(event) => {
+                        const selectedEntry = event.target.value
+                        finalVotes.find(x => x.show_id === nf.id).entry_id = parseInt(selectedEntry) || -1
+                        console.log(finalVotes)
+                    }}
+                    disabled={!nf.open}
+                >
+                    {nf.entries.map((entry)=>
+                    {
+                        return (
+                            <option key={entry.id} value={entry.id} selected={entry.voted}>
+                                {entry.title}
+                            </option>
+                        )
+                    })}
+                </select>
+                <br/>
+                {nf.final_date}
+            </div>
+        )
+    }
+
 
     const submitVote = async (e) => {
         e.preventDefault()
@@ -58,62 +99,69 @@ const Profile = () => {
 
     }
     return (
-        <div style={{display: 'flex', 'flex-direction':'column', "justify-content": "space-between"}}>
-            <span>
+        <div style={{display: 'flex', 'flex-direction':'column'}}>
+            <span style={{display: 'flex', 'flex-direction':'row', 'justify-content': "space-between"}}>
                 <img src={"https://scontent-mad1-1.xx.fbcdn.net/v/t1.15752-9/253320266_1240276056456288_7360099326448372741_n.png?_nc_cat=100&ccb=1-5&_nc_sid=ae9488&_nc_ohc=QJzhllAkBSIAX9LNdCe&_nc_ht=scontent-mad1-1.xx&oh=e66e93303422be74950927e83bc29f2b&oe=61C58A49"} height={150}/>
-                {"Hello "}
-                {name}
-                {"You've got a total of "+myScore+" points. You're ranked number "+myRank}
+                <span style={{display: 'flex', 'flex-direction':'row', 'justify-content': "space-between"}}>
+                    {"Hello "}
+                    {name}
+                    <br/>
+                    <br/>
+                    {"You've got a total of "+myScore+" points."}
+                    <br/>
+                    <br/>
+                    {"You're ranked number "+myRank}
+                </span>
+                <span>
+                    <button onClick={async (e) => await logout(e)}>Logout</button>
+                </span>
             </span>
-            <div style={{display: 'flex', 'flex-direction':'row'}}>
-            <span>
-                {ballot.map((nf) =>{
-                    return (
-                        <div key={nf.id}>
-                            <img src={getFlagForCountryNew(nf.country)} height={48}/>
-                            <span> {nf.nf}</span>
-                            <select
-                                onClick={(event) => {
-                                    const selectedEntry = event.target.value
-                                    finalVotes.find(x => x.show_id === nf.id).entry_id = parseInt(selectedEntry) || -1
-                                    console.log(finalVotes)
-                                }}
-                                disabled={!nf.open}
-                            >
-                                {nf.entries.map((entry)=>
-                                {
-                                    return (
-                                        <option key={entry.id} value={entry.id} selected={entry.voted}>
-                                            {entry.title}
-                                        </option>
-                                    )
-                                })}
-                            </select>
-                        </div>
-                    )
-                })}
-                <button onClick={submitVote}>
-                    Cast your votes
-                </button>
-                <Toaster/>
-            </span>
-            <span>
-                {leaderboard.length > 0 && leaderboard.map((entry) => {
-                    return (<span>
-                        <img src={getFlagForCountryNew(entry.country)} height={20}/>
-                        {entry.rank}{". "}
-                        {entry.first_name}{". "}
-                        {entry.score}
-                        <br/>
-                    </span>  )
-                })}
-                <br/>.<br/>.<br/>.<br/>
-                <img src={getFlagForCountryNew(country)} height={20}/>
-                {myRank}{". "}
-                {name}{". "}
-                {myScore}
-                <br/>
-            </span>
+            <div style={{display: 'flex', 'flex-direction':'row', 'width': "100%", "justify-content": "space-around"}}>
+                <span>
+                    {ballot
+                        .sort((nf1, nf2) => {
+                            if(nf1.final_date < nf2.final_date) return -1
+                            if(nf2.final_date < nf1.final_date) return 1
+                            return 0
+                        })
+                        .map((nf) =>{
+                            if (nf.entries.length === 0) return undefined
+                            return countryBox(nf)
+                    })}
+                    <button onClick={submitVote}>
+                        Cast your votes
+                    </button>
+                    <span>
+                    {ballot
+                        .sort((nf1, nf2) => {
+                            if(nf1.final_date < nf2.final_date) return -1
+                            if(nf2.final_date < nf1.final_date) return 1
+                            return 0
+                        })
+                        .map((nf) =>{
+                            if (nf.entries.length > 0) return undefined
+                            return countryBox(nf)
+                        })}
+                    </span>
+                    <Toaster/>
+                </span>
+                <span>
+                    {leaderboard.length > 0 && leaderboard.map((entry) => {
+                        return (<span>
+                            <img src={getFlagForCountryNew(entry.country)} height={20}/>
+                            {entry.rank}{". "}
+                            {entry.first_name}{". "}
+                            {entry.score}
+                            <br/>
+                        </span>  )
+                    })}
+                    <br/>.<br/>.<br/>.<br/>
+                    <img src={getFlagForCountryNew(country)} height={20}/>
+                    {myRank}{". "}
+                    {name}{". "}
+                    {myScore}
+                    <br/>
+                </span>
             </div>
         </div>
     );
