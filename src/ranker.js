@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import countries, {countryNameMap} from "./constants";
-import RankCountryComponent from "./RankCountryComponent";
 import {getFlagForCountry} from "./images";
 
 export default class Ranker extends Component {
@@ -31,7 +30,7 @@ export default class Ranker extends Component {
                          let i = this.state.i
                          let sorted = this.state.sorted
                          if(j === this.state.countries.length){
-                             i = i + 1
+                             i += 1
                              j = i + 1
                          }
                          if(i === this.state.countries.length){

@@ -1,0 +1,99 @@
+import {getJWTHeaders, jsonHeaders, setHasUserBeenLoggedIn, storeRefreshToken, storeToken} from "./utils";
+import React from 'react';
+
+export default async function submitRegistration(data){
+    return fetch("http://localhost:8000/api/auth/register/", {
+        method: "post",
+        body: JSON.stringify(data),
+        headers: jsonHeaders,
+    }).
+        then((response) => {
+            const { status } = response
+            const isValid = status === 201
+            console.log("status " +response.status)
+
+            let loginError
+            if (status === 400) {
+                loginError = 'credentials'
+            } else if (status === 405) {
+                loginError = 'method'
+            } else if (/^5\d\d$/.test(status.toString())) {
+                loginError = 'internal'
+            } else if (status !== 201){
+                loginError = "wrong status code " + status
+            }
+            const data = response.json()
+            return isValid ? data : Promise.reject(loginError)
+        })
+        .then(
+            (data) => {
+                console.log("response is " + data)
+                // const r = response.json()
+                console.log(data.token)
+                storeToken(data.token)
+                storeRefreshToken(data.refresh || '')
+                setHasUserBeenLoggedIn()
+                return true
+            }
+        )
+        .catch((error) => {
+            alert(error);
+            console.log(error)
+            // console.log(error.status)
+            return false
+        })
+}
+
+export const postLogin = (data) => {
+    const url = 'http://localhost:8000/api/auth/login/'
+
+    const finalOptions = {
+        headers: jsonHeaders,
+        method: 'POST',
+        body: JSON.stringify(data),
+    }
+
+    return fetch(url, finalOptions)
+        .then((response) => {
+            const { status } = response
+            const isValid = status >= 200 && status <= 299
+
+            let loginError
+            if (status === 400) {
+                loginError = 'credentials'
+            } else if (status === 405) {
+                loginError = 'method'
+            } else if (/^5\d\d$/.test(status.toString())) {
+                loginError = 'internal'
+            }
+
+            return isValid ? response : Promise.reject(loginError)
+        })
+        .then(async (response) => {
+            const parsedResponse = await response.json()
+            if (parsedResponse.redirectVerifyUrl) {
+                window.location.assign(parsedResponse.redirectVerifyUrl)
+            }
+            return parsedResponse
+        })
+        .then(
+            (response) => {
+                storeToken(response.access)
+                storeRefreshToken(response.refresh || '')
+                setHasUserBeenLoggedIn()
+                return true
+            }
+        ).catch(
+            (e) => {
+                console.log(e)
+                return false
+            }
+        )
+
+}
+
+export const getUser = () => {
+    const url = 'http://localhost:8000/users/me/'
+    const headers = getJWTHeaders()
+    return fetch(url, {headers:headers}).then((response) => {return response.username})
+}

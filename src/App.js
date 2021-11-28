@@ -9,17 +9,26 @@ import Scoreboard from "./Scoreboard";
 import Vote from "./vote";
 import Results from "./Results";
 import Ranker from "./ranker";
+import RegistrationForm from "./userManagement/Register";
+import LoginForm from "./userManagement/LoginForm";
+import Profile from "./userManagement/Profile";
 
 export default function App() {
     return (
         <Router>
             <div>
                 <Switch>
+                    <Route path="/register">
+                        <RegistrationForm />
+                    </Route>
                     <Route path="/scoreboard">
                         <Scoreboard />
                     </Route>
                     <Route path="/users">
                         <Users />
+                    </Route>
+                    <Route path="/profile">
+                        <Profile />
                     </Route>
                     <Route path="/vote">
                         <Vote />
@@ -30,9 +39,11 @@ export default function App() {
                     <Route path="/sort">
                         <Ranker />
                     </Route>
-                    <Route path="/">
-                        <Setup />
-                    </Route>
+                    <Route exact path="/login" component={LoginForm} />
+                    {/*<ProtectedRoute exact path="/" component={Profile} />*/}
+                    {/*<Route path="/">*/}
+                    {/*    <Setup />*/}
+                    {/*</Route>*/}
                 </Switch>
             </div>
         </Router>

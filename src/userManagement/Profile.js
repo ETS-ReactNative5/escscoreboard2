@@ -1,0 +1,122 @@
+import React, {useEffect, useState} from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import {authHeaders, jsonHeaders} from "./utils";
+import toast, { Toaster } from 'react-hot-toast';
+import {getFlagForCountryNew} from "../images";
+import {fullFlagMap} from "../constants";
+
+const Profile = () => {
+    const [name, setName] = useState("")
+    const [country, setCountry] = useState("")
+    const [ballot, setBallot] = useState([])
+    const [finalVotes, setFinalVotes] = useState([])
+    const [leaderboard, setLeaderboard] = useState([])
+    const [myRank, setMyRank] = useState(0)
+    const [myScore, setMyScore] = useState(0)
+    useEffect(() => {
+        fetch("http://localhost:8000/api/user/", {headers: authHeaders})
+            .then((response) => {
+                if (response.status === 403 || response.status === 401){
+                    window.location.href = '/login';
+                }
+                if (response.status === 200){
+                    return response.json()
+                }
+                return Promise.reject(response.status)
+            }).then((data) => {
+                setName(data[0].first_name)
+                setCountry(data[0].country)
+                setBallot(data[0].votes)
+                const votes = data[0].votes.map((nf)=>{
+                    const votedEntry = nf.entries.find(entry => entry.voted === true)
+
+                    return {
+                        show_id:nf.id,
+                        entry_id: votedEntry ? votedEntry.id : -1
+                    }
+                })
+                setFinalVotes(votes)
+                console.log(votes)
+                setLeaderboard(data[0].leaderboard.leaderboard)
+                setMyRank(data[0].leaderboard.my_ranking)
+                setMyScore(data[0].leaderboard.my_score)
+            })
+    }, [])
+
+    const submitVote = async (e) => {
+        e.preventDefault()
+        await fetch("http://localhost:8000/cast_voting_ballot/", {headers: authHeaders, method: "POST", body: JSON.stringify(finalVotes)})
+            .then((response) => {
+                if (response.status === 200) {
+                    toast.success('Success!')
+                }
+                else {
+                    toast.error('Something went wrong')
+                }
+            })
+
+    }
+    return (
+        <div style={{display: 'flex', 'flex-direction':'column', "justify-content": "space-between"}}>
+            <span>
+                <img src={"https://scontent-mad1-1.xx.fbcdn.net/v/t1.15752-9/253320266_1240276056456288_7360099326448372741_n.png?_nc_cat=100&ccb=1-5&_nc_sid=ae9488&_nc_ohc=QJzhllAkBSIAX9LNdCe&_nc_ht=scontent-mad1-1.xx&oh=e66e93303422be74950927e83bc29f2b&oe=61C58A49"} height={150}/>
+                {"Hello "}
+                {name}
+                {"You've got a total of "+myScore+" points. You're ranked number "+myRank}
+            </span>
+            <div style={{display: 'flex', 'flex-direction':'row'}}>
+            <span>
+                {ballot.map((nf) =>{
+                    return (
+                        <div key={nf.id}>
+                            <img src={getFlagForCountryNew(nf.country)} height={48}/>
+                            <span> {nf.nf}</span>
+                            <select
+                                onClick={(event) => {
+                                    const selectedEntry = event.target.value
+                                    finalVotes.find(x => x.show_id === nf.id).entry_id = parseInt(selectedEntry) || -1
+                                    console.log(finalVotes)
+                                }}
+                                disabled={!nf.open}
+                            >
+                                {nf.entries.map((entry)=>
+                                {
+                                    return (
+                                        <option key={entry.id} value={entry.id} selected={entry.voted}>
+                                            {entry.title}
+                                        </option>
+                                    )
+                                })}
+                            </select>
+                        </div>
+                    )
+                })}
+                <button onClick={submitVote}>
+                    Cast your votes
+                </button>
+                <Toaster/>
+            </span>
+            <span>
+                {leaderboard.length > 0 && leaderboard.map((entry) => {
+                    return (<span>
+                        <img src={getFlagForCountryNew(entry.country)} height={20}/>
+                        {entry.rank}{". "}
+                        {entry.first_name}{". "}
+                        {entry.score}
+                        <br/>
+                    </span>  )
+                })}
+                <br/>.<br/>.<br/>.<br/>
+                <img src={getFlagForCountryNew(country)} height={20}/>
+                {myRank}{". "}
+                {name}{". "}
+                {myScore}
+                <br/>
+            </span>
+            </div>
+        </div>
+    );
+};
+
+export default Profile;

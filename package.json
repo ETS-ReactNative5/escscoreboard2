@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^1.6.2",
+    "axios": "^0.24.0",
+    "axios-auth-refresh": "^3.2.1",
     "file-saver": "^2.0.2",
+    "formik": "^2.2.9",
     "material-ui": "^0.20.2",
     "node-sass": "^4.14.1",
     "npm-run-all": "^4.1.5",
@@ -14,10 +18,17 @@
     "react-dropdown": "1.9.0",
     "react-flip-move": "^3.0.4",
     "react-flip-toolkit": "^7.0.9",
+    "react-hot-toast": "^2.1.1",
     "react-player": "^2.7.2",
+    "react-redux": "^7.2.6",
+    "react-router": "^5.2.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "0.9.5",
-    "require-context": "^1.1.0"
+    "react-toast-notifications": "^2.5.1",
+    "redux": "^4.1.2",
+    "redux-persist": "^6.0.0",
+    "require-context": "^1.1.0",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "build-css": "node-sass src/ -o src/",
@@ -27,5 +38,8 @@
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.7"
   }
 }
