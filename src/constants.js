@@ -439,3 +439,6 @@ export const fullFlagMap = {
   "ZW": "ZW.svg",
   "XX": "XX.svg"
 }
+
+// export const baseUrl = "https://django-cloudrun-4fdxp3ewaq-ew.a.run.app/"
+export const baseUrl = "http://localhost:8000/"

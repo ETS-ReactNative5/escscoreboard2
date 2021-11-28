@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import {authHeaders, clearToken, jsonHeaders, setHasUserBeenLoggedIn, storeRefreshToken, storeToken} from "./utils";
 import toast, { Toaster } from 'react-hot-toast';
 import {getFlagForCountryNew} from "../images";
-import {fullFlagMap} from "../constants";
+import {baseUrl, fullFlagMap} from "../constants";
 
 const Profile = () => {
     const [name, setName] = useState("")
@@ -15,7 +15,7 @@ const Profile = () => {
     const [myRank, setMyRank] = useState(0)
     const [myScore, setMyScore] = useState(0)
     useEffect(() => {
-        fetch("http://localhost:8000/api/user/", {headers: authHeaders})
+        fetch(baseUrl + "api/user/", {headers: authHeaders})
             .then((response) => {
                 if (response.status === 403 || response.status === 401){
                     window.location.href = '/login';
@@ -87,7 +87,7 @@ const Profile = () => {
 
     const submitVote = async (e) => {
         e.preventDefault()
-        await fetch("http://localhost:8000/cast_voting_ballot/", {headers: authHeaders, method: "POST", body: JSON.stringify(finalVotes)})
+        await fetch(baseUrl + "cast_voting_ballot/", {headers: authHeaders, method: "POST", body: JSON.stringify(finalVotes)})
             .then((response) => {
                 if (response.status === 200) {
                     toast.success('Success!')

@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {postLogin} from "./api";
 import {authHeaders, getToken} from "./utils";
 import {useHistory} from "react-router";
+import {baseUrl} from "../constants";
 
 export default function LoginForm(props) {
 
@@ -34,7 +35,7 @@ export default function LoginForm(props) {
         }
     }
     useEffect(() => {
-        fetch("http://localhost:8000/api/user/", {headers: authHeaders})
+        fetch(baseUrl + "api/user/", {headers: authHeaders})
             .then((response) => {
                 if (response.status === 200){
                     return response.json()

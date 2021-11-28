@@ -1,3 +1,4 @@
+import {baseUrl} from "../constants";
 
 export const storeToken = (token) =>
     localStorage.setItem('Token', token)
@@ -31,7 +32,7 @@ export const getJWTHeaders = (
 }
 
 export const renewToken = () => {
-    const url = 'http://localhost:8000/api/auth/refresh/'
+    const url = baseUrl + 'api/auth/refresh/'
     const refreshesDone = parseFloat(
         localStorage.getItem('tkRefreshSemaphore') || '0'
     )

@@ -1,8 +1,9 @@
 import {getJWTHeaders, jsonHeaders, setHasUserBeenLoggedIn, storeRefreshToken, storeToken} from "./utils";
 import React from 'react';
+import {baseUrl} from "../constants";
 
 export default async function submitRegistration(data){
-    return fetch("http://localhost:8000/api/auth/register/", {
+    return fetch(baseUrl + "api/auth/register/", {
         method: "post",
         body: JSON.stringify(data),
         headers: jsonHeaders,
@@ -45,7 +46,7 @@ export default async function submitRegistration(data){
 }
 
 export const postLogin = (data) => {
-    const url = 'http://localhost:8000/api/auth/login/'
+    const url = baseUrl + 'api/auth/login/'
 
     const finalOptions = {
         headers: jsonHeaders,
@@ -93,7 +94,7 @@ export const postLogin = (data) => {
 }
 
 export const getUser = () => {
-    const url = 'http://localhost:8000/users/me/'
+    const url = baseUrl + 'users/me/'
     const headers = getJWTHeaders()
     return fetch(url, {headers:headers}).then((response) => {return response.username})
 }
