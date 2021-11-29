@@ -45,8 +45,7 @@ const Profile = () => {
     const history = useHistory();
 
     const redirectToLogin = () =>{
-        let path = `login`;
-        history.push(path);
+        window.location.href = '/login'
     }
 
     const logout = async (e) => {
