@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from "react";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import {authHeaders, clearToken, jsonHeaders, setHasUserBeenLoggedIn, storeRefreshToken, storeToken} from "./utils";
-import toast, { Toaster } from 'react-hot-toast';
+import {authHeaders, clearToken} from "./utils";
+// import toast, { Toaster } from 'react-hot-toast';
 import {getFlagForCountryNew} from "../images";
-import {baseUrl, fullFlagMap} from "../constants";
+import {baseUrl} from "../constants";
 
 const Profile = () => {
     const [name, setName] = useState("")
@@ -89,12 +88,12 @@ const Profile = () => {
         e.preventDefault()
         await fetch(baseUrl + "cast_voting_ballot/", {headers: authHeaders, method: "POST", body: JSON.stringify(finalVotes)})
             .then((response) => {
-                if (response.status === 200) {
-                    toast.success('Success!')
-                }
-                else {
-                    toast.error('Something went wrong')
-                }
+                // if (response.status === 200) {
+                //     toast.success('Success!')
+                // }
+                // else {
+                //     toast.error('Something went wrong')
+                // }
             })
 
     }
@@ -143,7 +142,7 @@ const Profile = () => {
                             return countryBox(nf)
                         })}
                     </span>
-                    <Toaster/>
+                    {/*<Toaster/>*/}
                 </span>
                 <span>
                     {leaderboard.length > 0 && leaderboard.map((entry) => {
