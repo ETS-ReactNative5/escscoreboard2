@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import submitRegistration from "./api";
 import {useHistory} from "react-router";
+import {Link} from "react-router-dom";
 
 export default function RegistrationForm(props) {
 
@@ -94,7 +95,7 @@ export default function RegistrationForm(props) {
                     {errorMessage}
                     <br/>
                     Already have an account?
-                    <button onClick={() => redirectToLogin()}>Login</button>
+                    <Link to={`login`} activeClassName="current"><button>Login</button></Link>
                 </div>
             </form>
         </div>

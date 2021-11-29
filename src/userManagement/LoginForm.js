@@ -4,15 +4,9 @@ import {postLogin} from "./api";
 import {authHeaders, getToken} from "./utils";
 import {useHistory} from "react-router";
 import {baseUrl} from "../constants";
+import {Link} from "react-router-dom";
 
 export default function LoginForm(props) {
-
-    const history = useHistory();
-
-    const redirectToRegister = () =>{
-        let path = `register`;
-        history.push(path);
-    }
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
@@ -84,7 +78,8 @@ export default function LoginForm(props) {
                 {errorMessage}
                 <br/>
                 Don't have an account?
-                <button onClick={() => redirectToRegister()}>Register</button>
+                <Link to={`register`} activeClassName="current"><button>Register</button></Link>
+
             </form>
         </div>
     )
