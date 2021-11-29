@@ -71,7 +71,7 @@ const Profile = () => {
                     {
                         return (
                             <option key={entry.id} value={entry.id} selected={entry.voted}>
-                                {entry.title}
+                                {entry.artist + " - " + entry.title}
                             </option>
                         )
                     })}
