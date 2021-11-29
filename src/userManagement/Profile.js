@@ -82,7 +82,6 @@ const Profile = () => {
         )
     }
 
-
     const submitVote = async (e) => {
         e.preventDefault()
         await fetch(baseUrl + "cast_voting_ballot/", {headers: authHeaders, method: "POST", body: JSON.stringify(finalVotes)})
@@ -146,7 +145,7 @@ const Profile = () => {
                 <span>
                     {leaderboard.length > 0 && leaderboard.map((entry) => {
                         return (<span>
-                            <img src={getFlagForCountryNew(entry.country)} height={20}/>
+                            {/*<img src={getFlagForCountryNew(entry.country)} height={20}/>*/}
                             {entry.rank}{". "}
                             {entry.first_name}{". "}
                             {entry.score}
@@ -154,7 +153,7 @@ const Profile = () => {
                         </span>  )
                     })}
                     <br/>.<br/>.<br/>.<br/>
-                    <img src={getFlagForCountryNew(country)} height={20}/>
+                    {/*<img src={getFlagForCountryNew(country)} height={20}/>*/}
                     {myRank}{". "}
                     {name}{". "}
                     {myScore}
