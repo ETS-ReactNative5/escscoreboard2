@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from "react";
 import { useHistory } from "react-router";
-import {authHeaders, clearToken} from "./utils";
+import {authHeaders, clearToken, jsonHeaders} from "./utils";
 // import toast, { Toaster } from 'react-hot-toast';
 import {getFlagForCountryNew} from "../images";
-import {baseUrl} from "../constants";
+import {baseUrl, countryListAlpha2} from "../constants";
 
 const Profile = () => {
     const [name, setName] = useState("")
     const [country, setCountry] = useState("")
+    const [currentName, setCurrentName] = useState("")
+    const [currentCountry, setCurrentCountry] = useState("")
     const [ballot, setBallot] = useState([])
     const [finalVotes, setFinalVotes] = useState([])
     const [leaderboard, setLeaderboard] = useState([])
@@ -25,7 +27,9 @@ const Profile = () => {
                 return Promise.reject(response.status)
             }).then((data) => {
                 setName(data[0].first_name)
+                setCurrentName(data[0].first_name)
                 setCountry(data[0].country)
+                setCurrentCountry(data[0].country)
                 setBallot(data[0].votes)
                 const votes = data[0].votes.map((nf)=>{
                     const votedEntry = nf.entries.find(entry => entry.voted === true)
@@ -95,6 +99,27 @@ const Profile = () => {
             })
 
     }
+
+    const updateProfile = async (e) =>  {
+        e.preventDefault()
+        const body = {
+            "first_name": currentName,
+            "country": currentCountry
+        }
+        const finalOptions = {
+            headers: authHeaders,
+            method: 'PATCH',
+            body: JSON.stringify(body),
+        }
+        const url = baseUrl + "update_user/"
+        return await fetch(url, finalOptions).then((response) => {
+            if (response.status === 200){
+                setCountry(currentCountry)
+                setName(currentName)
+            }
+        }).catch((e) => {console.log(e)})
+    }
+
     return (
         <div style={{display: 'flex', 'flex-direction':'column'}}>
             <span style={{display: 'flex', 'flex-direction':'row', 'justify-content': "space-between"}}>
@@ -108,6 +133,21 @@ const Profile = () => {
                     <br/>
                     <br/>
                     {"You're ranked number "+myRank}
+                    <span>
+                    {"Update your profile"}
+                    <form>
+                        <input type={"text"} value={currentName} onChange={(event => setCurrentName(event.target.value))}/>
+                        <select value={currentCountry}>
+                            {Object.keys(countryListAlpha2).map(
+                                (countrycode, id) => {
+                                    return(<option key={countrycode} value={countrycode} onClick={(e) => setCurrentCountry(e.target.value)}>{countryListAlpha2[countrycode]}</option>)
+                                }
+                            )}
+                        </select>
+                        <button onClick={async (e) => await updateProfile(e)}>Update your profile</button>
+                    </form>
+
+                    </span>
                 </span>
                 <span>
                     <button onClick={async (e) => await logout(e)}>Logout</button>
@@ -145,7 +185,7 @@ const Profile = () => {
                 <span>
                     {leaderboard.length > 0 && leaderboard.map((entry) => {
                         return (<span>
-                            {/*<img src={getFlagForCountryNew(entry.country)} height={20}/>*/}
+                            <img src={getFlagForCountryNew(entry.country)} height={20}/>
                             {entry.rank}{". "}
                             {entry.first_name}{". "}
                             {entry.score}
@@ -153,7 +193,7 @@ const Profile = () => {
                         </span>  )
                     })}
                     <br/>.<br/>.<br/>.<br/>
-                    {/*<img src={getFlagForCountryNew(country)} height={20}/>*/}
+                    <img src={getFlagForCountryNew(country)} height={20}/>
                     {myRank}{". "}
                     {name}{". "}
                     {myScore}
