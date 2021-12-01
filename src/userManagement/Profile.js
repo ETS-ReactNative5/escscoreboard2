@@ -137,10 +137,10 @@ const Profile = () => {
                     {"Update your profile"}
                     <form>
                         <input type={"text"} value={currentName} onChange={(event => setCurrentName(event.target.value))}/>
-                        <select value={currentCountry}>
+                        <select selected={currentCountry} onClick={(e) => setCurrentCountry(e.target.value)}>
                             {Object.keys(countryListAlpha2).map(
                                 (countrycode, id) => {
-                                    return(<option key={countrycode} value={countrycode} onClick={(e) => setCurrentCountry(e.target.value)}>{countryListAlpha2[countrycode]}</option>)
+                                    return(<option key={countrycode} value={countrycode} >{countryListAlpha2[countrycode]}</option>)
                                 }
                             )}
                         </select>
