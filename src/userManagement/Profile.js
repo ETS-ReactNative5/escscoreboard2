@@ -8,8 +8,8 @@ import {baseUrl, countryListAlpha2} from "../constants";
 const Profile = () => {
     const [name, setName] = useState("")
     const [country, setCountry] = useState("")
-    const [currentName, setCurrentName] = useState("")
-    const [currentCountry, setCurrentCountry] = useState("")
+    const [currentName, setCurrentName] = useState(name)
+    const [currentCountry, setCurrentCountry] = useState(country)
     const [ballot, setBallot] = useState([])
     const [finalVotes, setFinalVotes] = useState([])
     const [leaderboard, setLeaderboard] = useState([])
@@ -102,6 +102,9 @@ const Profile = () => {
 
     const updateProfile = async (e) =>  {
         e.preventDefault()
+
+        setCountry(currentCountry)
+        setName(currentName)
         const body = {
             "first_name": currentName,
             "country": currentCountry
@@ -137,9 +140,13 @@ const Profile = () => {
                     {"Update your profile"}
                     <form>
                         <input type={"text"} value={currentName} onChange={(event => setCurrentName(event.target.value))}/>
-                        <select selected={currentCountry} onClick={(e) => setCurrentCountry(e.target.value)}>
+                        <select onClick={(e) => setCurrentCountry(e.target.value)}>
                             {Object.keys(countryListAlpha2).map(
                                 (countrycode, id) => {
+                                    if (countrycode === currentCountry){
+                                        return(<option key={countrycode} value={countrycode} selected>{countryListAlpha2[countrycode]}</option>)
+
+                                    }
                                     return(<option key={countrycode} value={countrycode} >{countryListAlpha2[countrycode]}</option>)
                                 }
                             )}
