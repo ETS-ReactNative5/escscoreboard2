@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 import { useHistory } from "react-router";
 import {authHeaders, clearToken, jsonHeaders} from "./utils";
-// import toast, { Toaster } from 'react-hot-toast';
 import {getFlagForCountryNew} from "../images";
 import {baseUrl, countryListAlpha2} from "../constants";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Profile = () => {
     const [name, setName] = useState("")
@@ -15,7 +16,8 @@ const Profile = () => {
     const [leaderboard, setLeaderboard] = useState([])
     const [myRank, setMyRank] = useState(0)
     const [myScore, setMyScore] = useState(0)
-    useEffect(() => {
+
+    const fetchuser = () => {
         fetch(baseUrl + "api/user/", {headers: authHeaders})
             .then((response) => {
                 if (response.status === 403 || response.status === 401){
@@ -26,25 +28,26 @@ const Profile = () => {
                 }
                 return Promise.reject(response.status)
             }).then((data) => {
-                setName(data[0].first_name)
-                setCurrentName(data[0].first_name)
-                setCountry(data[0].country)
-                setCurrentCountry(data[0].country)
-                setBallot(data[0].votes)
-                const votes = data[0].votes.map((nf)=>{
-                    const votedEntry = nf.entries.find(entry => entry.voted === true)
+            setName(data[0].first_name)
+            setCurrentName(data[0].first_name)
+            setCountry(data[0].country)
+            setCurrentCountry(data[0].country)
+            setBallot(data[0].votes)
+            const votes = data[0].votes.map((nf)=>{
+                const votedEntry = nf.entries.find(entry => entry.voted === true)
 
-                    return {
-                        show_id:nf.id,
-                        entry_id: votedEntry ? votedEntry.id : -1
-                    }
-                })
-                setFinalVotes(votes)
-                setLeaderboard(data[0].leaderboard.leaderboard)
-                setMyRank(data[0].leaderboard.my_ranking)
-                setMyScore(data[0].leaderboard.my_score)
+                return {
+                    show_id:nf.id,
+                    entry_id: votedEntry ? votedEntry.id : -1
+                }
             })
-    }, [])
+            setFinalVotes(votes)
+            setLeaderboard(data[0].leaderboard.leaderboard)
+            setMyRank(data[0].leaderboard.my_ranking)
+            setMyScore(data[0].leaderboard.my_score)
+        })
+    }
+    useEffect(() => fetchuser(), [])
 
     const history = useHistory();
 
@@ -90,12 +93,12 @@ const Profile = () => {
         e.preventDefault()
         await fetch(baseUrl + "cast_voting_ballot/", {headers: authHeaders, method: "POST", body: JSON.stringify(finalVotes)})
             .then((response) => {
-                // if (response.status === 200) {
-                //     toast.success('Success!')
-                // }
-                // else {
-                //     toast.error('Something went wrong')
-                // }
+                if (response.status === 200) {
+                    toast.success('Success!')
+                }
+                else {
+                    toast.error('Something went wrong')
+                }
             })
 
     }
@@ -115,12 +118,13 @@ const Profile = () => {
             body: JSON.stringify(body),
         }
         const url = baseUrl + "update_user/"
-        return await fetch(url, finalOptions).then((response) => {
+        await fetch(url, finalOptions).then((response) => {
             if (response.status === 200){
                 setCountry(currentCountry)
                 setName(currentName)
             }
         }).catch((e) => {console.log(e)})
+        await fetchuser()
     }
 
     return (
@@ -187,7 +191,6 @@ const Profile = () => {
                             return countryBox(nf)
                         })}
                     </span>
-                    {/*<Toaster/>*/}
                 </span>
                 <span>
                     {leaderboard.length > 0 && leaderboard.map((entry) => {
@@ -206,6 +209,7 @@ const Profile = () => {
                     {myScore}
                     <br/>
                 </span>
+                <ToastContainer/>
             </div>
         </div>
     );
