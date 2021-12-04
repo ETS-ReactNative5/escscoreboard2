@@ -62,6 +62,11 @@ const Profile = () => {
     }
 
     const countryBox = (nf) => {
+        const nfvote = finalVotes.find(x => x.show_id === nf.id)
+        let currentVote = -1
+        if (nfvote){
+            currentVote = nfvote.entry_id
+        }
         return (
             <div key={nf.id}>
                 <img src={getFlagForCountryNew(nf.country)} height={20}/>
@@ -74,6 +79,8 @@ const Profile = () => {
                     }}
                     disabled={!nf.open}
                 >
+                    <option key={null} value={null} selected={currentVote === -1}>----</option>
+
                     {nf.entries.map((entry)=>
                     {
                         return (
