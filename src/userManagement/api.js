@@ -15,12 +15,15 @@ export default async function submitRegistration(data){
 
             let loginError
             if (status === 400) {
-                loginError = 'credentials'
+                loginError = 'Invalid Credentials'
             } else if (status === 405) {
                 loginError = 'method'
             } else if (/^5\d\d$/.test(status.toString())) {
-                loginError = 'internal'
-            } else if (status !== 201){
+                loginError = 'Internal error'
+            } else if (status === 409) {
+                loginError = 'User already exists'
+                window.location.assign("login")
+            }else if (status !== 201){
                 loginError = "wrong status code " + status
             }
             const data = response.json()
@@ -40,7 +43,6 @@ export default async function submitRegistration(data){
         .catch((error) => {
             alert(error);
             console.log(error)
-            // console.log(error.status)
             return false
         })
 }
