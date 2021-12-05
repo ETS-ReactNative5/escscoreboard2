@@ -100,7 +100,7 @@ export default class Results extends Component {
           classname = "country country--small country--qualified";
         }
         return (
-          <div class={classname}>
+          <div className={classname}>
             <span className="country__flag">
               <img src={getFlagForCountry(value)} />
             </span>

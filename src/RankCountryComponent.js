@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getFlagForCountry } from "./images";
-import { countryNameMap, get_edtion_for_country } from "./constants";
+import { countryNameMap, get_edition_for_country } from "./constants";
 
 export default class RankCountryComponent extends Component {
   flagOrRanking() {
@@ -24,7 +24,7 @@ export default class RankCountryComponent extends Component {
         : "country";
 
     class_name =
-      class_name + " country--" + get_edtion_for_country(this.props.country);
+      class_name + " country--" + get_edition_for_country(this.props.country);
 
     return (
       <div className={class_name}>
