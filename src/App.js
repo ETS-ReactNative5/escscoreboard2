@@ -43,7 +43,7 @@ export default function App() {
                     {/*    <Ranker />*/}
                     {/*</Route>*/}
                     <Route exact path="/login" component={LoginForm} />
-                    <Route path="/reset-confirm" component={CheckYourEmail} />
+                    <Route exact path="/reset-confirm" component={CheckYourEmail} />
                     <Route exact path="/forgot-password" component={ForgotPassword} />
                     <Route exact path="/reset-password" component={PasswordReset} />
                     <Route path="/" component={LoginForm} />
