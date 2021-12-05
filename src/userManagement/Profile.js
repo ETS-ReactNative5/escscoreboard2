@@ -8,7 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
   const [name, setName] = useState("");
+  const [id, setId] = useState(0);
   const [country, setCountry] = useState("");
+  const [totalUsers, setTotalUsers] = useState("");
   const [currentName, setCurrentName] = useState(name);
   const [currentCountry, setCurrentCountry] = useState(country);
   const [ballot, setBallot] = useState([]);
@@ -32,6 +34,7 @@ const Profile = () => {
         setName(data[0].first_name);
         setCurrentName(data[0].first_name);
         setCountry(data[0].country);
+        setId(data[0].id);
         setCurrentCountry(data[0].country);
         setBallot(data[0].votes);
         const votes = data[0].votes.map((nf) => {
@@ -46,6 +49,7 @@ const Profile = () => {
         setLeaderboard(data[0].leaderboard.leaderboard);
         setMyRank(data[0].leaderboard.my_ranking);
         setMyScore(data[0].leaderboard.my_score);
+        setTotalUsers(data[0].leaderboard.total_users);
       });
   };
   useEffect(() => fetchuser(), []);
@@ -156,7 +160,7 @@ const Profile = () => {
           myScore +
           " points. You're current rank is #" +
           myRank +
-          "."}
+          " out of "+totalUsers+" players."}
       </div>
       <div className="dashboard">
         <div className="events">
@@ -242,8 +246,12 @@ const Profile = () => {
             <div className="leaderboard__list">
               {leaderboard.length > 0 &&
                 leaderboard.map((entry) => {
+                  let className = "leaderboard__item user"
+                  if(entry.id === id){
+                    className = "user user--highlighted"
+                  }
                   return (
-                    <div className="leaderboard__item user">
+                    <div className={className}>
                       <img
                         className="user__flag"
                         src={getFlagForCountryNew(entry.country)}
