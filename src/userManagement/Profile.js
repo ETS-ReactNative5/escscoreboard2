@@ -81,8 +81,9 @@ const Profile = () => {
         </div>
         <select
           className="event__selection"
-          onClick={(event) => {
+          onChange={(event) => {
             const selectedEntry = event.target.value;
+            console.log(selectedEntry)
             finalVotes.find((x) => x.show_id === nf.id).entry_id =
               parseInt(selectedEntry) || -1;
             console.log(finalVotes);
@@ -229,7 +230,7 @@ const Profile = () => {
               </div>
               <button
                 className="btn btn--primary"
-                onClick={async (e) => await updateProfile(e)}
+                onChange={async (e) => await updateProfile(e)}
               >
                 Update your profile
               </button>
