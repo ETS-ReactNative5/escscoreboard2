@@ -149,7 +149,7 @@ const Profile = () => {
       .catch((e) => {
         console.log(e);
       });
-    await fetchuser();
+    // await fetchuser();
   };
 
   return (
@@ -210,7 +210,7 @@ const Profile = () => {
                 <label className="form__label">Country</label>
                 <select
                   className="form__input"
-                  onClick={(e) => setCurrentCountry(e.target.value)}
+                  onChange={(e) => setCurrentCountry(e.target.value)}
                 >
                   {Object.keys(countryListAlpha2).map((countrycode, id) => {
                     if (countrycode === currentCountry) {
@@ -230,7 +230,7 @@ const Profile = () => {
               </div>
               <button
                 className="btn btn--primary"
-                onChange={async (e) => await updateProfile(e)}
+                onClick={async (e) => await updateProfile(e)}
               >
                 Update your profile
               </button>
@@ -248,18 +248,26 @@ const Profile = () => {
               {leaderboard.length > 0 &&
                 leaderboard.map((entry) => {
                   let className = "leaderboard__item user"
+                  let name = entry.first_name
+                  let score = entry.score
+                  let rank = entry.rank
+                  let country = entry.country
                   if(entry.id === id){
                     className = "user user--highlighted"
+                    name = currentName
+                    country = currentCountry
+                    score = myScore
+                    rank = myRank
                   }
                   return (
                     <div className={className}>
                       <img
                         className="user__flag"
-                        src={getFlagForCountryNew(entry.country)}
+                        src={getFlagForCountryNew(country)}
                       />
-                      <div className="user__rank">{"#" + entry.rank + " "}</div>
-                      <div className="user__name">{entry.first_name}</div>
-                      <div className="user__score">{entry.score}</div>
+                      <div className="user__rank">{"#" + rank + " "}</div>
+                      <div className="user__name">{name}</div>
+                      <div className="user__score">{score}</div>
                     </div>
                   );
                 })}

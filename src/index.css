@@ -43,8 +43,9 @@ img {
   padding: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
   font-size: 0.75em; }
-  .form__input::placeholder {
-    color: rgba(255, 255, 255, 0.5); }
+
+.form__input::placeholder {
+  color: rgba(255, 255, 255, 0.5); }
 
 .form__input option {
   color: black; }
@@ -64,11 +65,12 @@ img {
   max-width: 1170px;
   margin: 0 auto;
   padding: 0 1rem; }
-  @media screen and (min-width: 768px) {
-    .dashboard {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      grid-gap: 3rem; } }
+
+@media screen and (min-width: 768px) {
+  .dashboard {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 3rem; } }
 
 .events {
   grid-column: 1 / 2; }
@@ -152,11 +154,13 @@ img {
   font-size: 0.75em;
   padding: 0;
   border: 0; }
-  .event__selection option {
-    padding: 0;
-    color: black; }
-  .event__selection:focus {
-    background-color: rgba(255, 255, 255, 0.2); }
+
+.event__selection option {
+  padding: 0;
+  color: black; }
+
+.event__selection:focus {
+  background-color: rgba(255, 255, 255, 0.2); }
 
 .ribbon {
   position: fixed;
@@ -191,14 +195,16 @@ img {
   margin-right: 0.5rem;
   transition: 0.4s ease;
   width: auto; }
-  .btn:hover {
-    background-color: transparent; }
+
+.btn:hover {
+  background-color: transparent; }
 
 .btn--primary {
   background-color: #98b6c1;
   color: black; }
-  .btn--primary:hover {
-    background-color: #b8cdd4; }
+
+.btn--primary:hover {
+  background-color: #b8cdd4; }
 
 .Toastify {
   font-family: "Readex Pro", sans-serif; }

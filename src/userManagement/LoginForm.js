@@ -84,6 +84,12 @@ export default function LoginForm(props) {
           <Link to={`register`}>
             <button className="btn btn--secondary">Register</button>
           </Link>
+          <br/>
+          <span className="auth__question">Forgot your password?</span>
+          <Link to={`/forgot-password`}>
+            <button className="btn btn--secondary">Reset</button>
+          </Link>
+
         </div>
       </form>
     </div>
