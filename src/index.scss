@@ -63,6 +63,10 @@ img {
   }
 }
 
+.form__input option {
+  color: black;
+}
+
 .auth {
   max-width: 320px;
   margin: 0 auto;
@@ -84,7 +88,7 @@ img {
   @media screen and (min-width: 768px) {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    grid-gap: 3rem;    
+    grid-gap: 3rem;
   }
 }
 
@@ -113,7 +117,7 @@ img {
 }
 
 .user--highlighted {
-  background-color:rgba(white, 0.1);
+  background-color: rgba(white, 0.1);
   border: 1px solid rgba(white, 0.1);
   border-radius: $radius-s;
 }
@@ -186,6 +190,7 @@ img {
   border: 0;
   option {
     padding: 0;
+    color: black;
   }
   &:focus {
     background-color: rgba(white, 0.2);
@@ -224,7 +229,7 @@ img {
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-right: 0.5rem;
-  transition: .4s ease;
+  transition: 0.4s ease;
   width: auto;
   &:hover {
     background-color: transparent;

@@ -47,6 +47,9 @@ img {
 .form__input::placeholder {
   color: rgba(255, 255, 255, 0.5); }
 
+.form__input option {
+  color: black; }
+
 .auth {
   max-width: 320px;
   margin: 0 auto; }
@@ -153,7 +156,8 @@ img {
   border: 0; }
 
 .event__selection option {
-  padding: 0; }
+  padding: 0;
+  color: black; }
 
 .event__selection:focus {
   background-color: rgba(255, 255, 255, 0.2); }
@@ -189,7 +193,7 @@ img {
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-right: 0.5rem;
-  transition: .4s ease;
+  transition: 0.4s ease;
   width: auto; }
 
 .btn:hover {
