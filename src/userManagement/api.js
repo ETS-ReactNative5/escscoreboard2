@@ -61,6 +61,9 @@ export const postLogin = (data) => {
             const isValid = status >= 200 && status <= 299
             return isValid ? response : Promise.reject(status)
         })
+        .then(async (response) => {
+            return await response.json()
+        })
         .then(
             (response) => {
                 storeToken(response.access)
