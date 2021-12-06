@@ -1,20 +1,8 @@
 import React, { useState } from "react";
-import submitRegistration from "./api";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
 import {baseUrl} from "../constants";
 import {jsonHeaders, setHasUserBeenLoggedIn, storeRefreshToken, storeToken} from "./utils";
-import { useParams } from "react-router-dom";
-import queryString from 'query-string'
 
 export default function PasswordReset(props) {
-    const history = useHistory();
-
-    const redirectToLogin = () => {
-        let path = `login`;
-        history.push(path);
-    };
-
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -94,13 +82,14 @@ export default function PasswordReset(props) {
         } else if (password !== confirmPassword) {
             setErrorMessage("Passwords don't match");
             return;
+        } else if (password.length <8){
+            setErrorMessage("Minimum password length is 8 characters")
         } else {
             const success = await postResetPassword({
                 password: password,
                 token: token,
             });
             if (success === true) {
-                console.log("success " + success);
                 setShouldRedirect(true);
             }
         }
@@ -146,13 +135,8 @@ export default function PasswordReset(props) {
                 >
                     Reset my password
                 </button>
-                {/*{errorMessage}*/}
-                {/*<div class="login">*/}
-                {/*    <span className="auth__question">Already have an account?</span>*/}
-                {/*    <Link to={`login`} activeClassName="current">*/}
-                {/*        <button className="btn btn--secondary">Login</button>*/}
-                {/*    </Link>*/}
-                {/*</div>*/}
+                <br/>
+                {errorMessage}
             </form>
         </div>
     );

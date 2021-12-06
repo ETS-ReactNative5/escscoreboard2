@@ -1,18 +1,8 @@
 import React, { useState } from "react";
-import submitRegistration from "./api";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
 import {baseUrl} from "../constants";
 import {jsonHeaders, setHasUserBeenLoggedIn, storeRefreshToken, storeToken} from "./utils";
 
 export default function ForgotPassword(props) {
-    const history = useHistory();
-
-    const redirectToLogin = () => {
-        let path = `login`;
-        history.push(path);
-    };
-
     const [email, setEmail] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [shouldRedirect, setShouldRedirect] = useState(false);
