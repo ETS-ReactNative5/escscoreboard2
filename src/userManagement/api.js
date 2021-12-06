@@ -7,7 +7,8 @@ export default async function submitRegistration(data){
         method: "post",
         body: JSON.stringify(data),
         headers: jsonHeaders,
-    }).then((response) => {
+    }).
+        then((response) => {
             const { status } = response
             const isValid = status === 201
             console.log("status " +response.status)
@@ -59,19 +60,36 @@ export const postLogin = (data) => {
         .then((response) => {
             const { status } = response
             const isValid = status >= 200 && status <= 299
-            return isValid ? response : Promise.reject(status)
+
+            let loginError
+            if (status === 400) {
+                loginError = 'credentials'
+            } else if (status === 405) {
+                loginError = 'method'
+            } else if (/^5\d\d$/.test(status.toString())) {
+                loginError = 'internal'
+            }
+
+            return isValid ? response : Promise.reject(loginError)
+        })
+        .then(async (response) => {
+            const parsedResponse = await response.json()
+            if (parsedResponse.redirectVerifyUrl) {
+                window.location.assign(parsedResponse.redirectVerifyUrl)
+            }
+            return parsedResponse
         })
         .then(
             (response) => {
                 storeToken(response.access)
                 storeRefreshToken(response.refresh || '')
                 setHasUserBeenLoggedIn()
-                return response.status
+                return true
             }
         ).catch(
-            (status) => {
-                console.log(status)
-                return status
+            (e) => {
+                console.log(e)
+                return false
             }
         )
 

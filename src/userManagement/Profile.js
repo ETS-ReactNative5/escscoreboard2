@@ -54,6 +54,8 @@ const Profile = () => {
   };
   useEffect(() => fetchuser(), []);
 
+  const history = useHistory();
+
   const redirectToLogin = () => {
     window.location.href = "/login";
   };

@@ -1,4 +1,4 @@
-import {countryFlagMap} from "./constants";
+import {countryFlagMap, fullFlagMap} from "./constants";
 
 function importAll(r) {
   let images = {};

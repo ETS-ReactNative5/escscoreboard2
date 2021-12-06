@@ -19,14 +19,9 @@ export default function LoginForm(props) {
     if (!username || !password) {
       setErrorMessage("Email and password are mandatory");
     } else {
-      const status = await postLogin({ email: username, password: password });
-      if (status >= 200 && status <= 299) {
+      const success = await postLogin({ email: username, password: password });
+      if (success === true) {
         setShouldRedirect(true);
-      }
-      else if (status === 401){
-        setErrorMessage("Username or password incorrect")
-      } else {
-       setErrorMessage("Something went wrong: Error code "+ status)
       }
     }
   };
@@ -41,7 +36,7 @@ export default function LoginForm(props) {
       .then((data) => {
         setShouldRedirect(true);
       })
-      .catch((status) => {});
+      .catch(() => {});
   }, []);
   if (shouldRedirect === true && getToken() !== null) {
     window.location.href = "/profile";
@@ -83,9 +78,7 @@ export default function LoginForm(props) {
         >
           Login
         </button>
-        <br/>
         {errorMessage}
-        <br/>
         <div className="register">
           <span class="auth__question">Don't have an account?</span>
           <Link to={`register`}>
