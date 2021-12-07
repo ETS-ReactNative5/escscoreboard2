@@ -57,10 +57,16 @@ img {
 
 .auth {
   max-width: 320px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  padding: 0 1rem; }
+
+@media screen and (min-width: 768px) {
+  .auth {
+    padding: 0 2rem; } }
 
 .auth img {
-  margin-bottom: 2rem; }
+  margin-bottom: 2rem;
+  max-width: 240px; }
 
 .auth__question {
   font-size: 0.75em;
