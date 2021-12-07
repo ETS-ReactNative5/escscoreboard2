@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import submitRegistration from "./api";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
@@ -24,9 +24,9 @@ export default function RegistrationForm(props) {
     if (errorMessage !== "") {
       setErrorMessage("");
     }
-    if (!emailValidation()){
-      setErrorMessage("Invalid email")
-      return
+    if (!emailValidation()) {
+      setErrorMessage("Invalid email");
+      return;
     }
     if (!email || !password) {
       setErrorMessage("Email and password are mandatory");
@@ -34,9 +34,9 @@ export default function RegistrationForm(props) {
     } else if (password !== confirmPassword) {
       setErrorMessage("Passwords don't match");
       return;
-    } else if (password.length <8){
-      setErrorMessage("Minimum password length is 8 characters")
-    } else{
+    } else if (password.length < 8) {
+      setErrorMessage("Minimum password length is 8 characters");
+    } else {
       const success = await submitRegistration({
         email: email,
         password: password,
@@ -50,11 +50,11 @@ export default function RegistrationForm(props) {
   };
   const emailValidation = () => {
     const regex =
-        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    console.log("email is " + email + " regex is " + regex.test(email))
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    console.log("email is " + email + " regex is " + regex.test(email));
 
     return email && regex.test(email);
-  }
+  };
 
   if (shouldRedirect) {
     window.location.href = "/profile";
@@ -90,7 +90,7 @@ export default function RegistrationForm(props) {
               setPassword(event.target.value);
             }}
           />
-          <span>Minimum of 8 characters</span>
+          <div className="message message--info">Minimum of 8 characters</div>
         </div>
         <div className="form__element">
           <label className="form__label">Confirm Password</label>
@@ -113,10 +113,16 @@ export default function RegistrationForm(props) {
         </button>
         {errorMessage}
         <div class="login">
-          <span className="auth__question">Already have an account?</span>
-          <Link to={`login`} activeClassName="current">
-            <button className="btn btn--secondary">Login</button>
-          </Link>
+          <div className="auth__question">
+            Already have an account?
+            <Link
+              to={`login`}
+              activeClassName="current"
+              className="btn btn--secondary"
+            >
+              Login
+            </Link>
+          </div>
         </div>
       </form>
     </div>
