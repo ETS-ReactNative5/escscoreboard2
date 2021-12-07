@@ -15,7 +15,6 @@ export default function LoginForm(props) {
     if (errorMessage !== "") {
       setErrorMessage("");
     }
-
     if (!username || !password) {
       setErrorMessage("Email and password are mandatory");
     } else {

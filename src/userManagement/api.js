@@ -69,15 +69,13 @@ export const postLogin = (data) => {
                 storeToken(response.access)
                 storeRefreshToken(response.refresh || '')
                 setHasUserBeenLoggedIn()
-                return response.status
+                return 200
             }
         ).catch(
             (status) => {
-                console.log(status)
                 return status
             }
         )
-
 }
 
 export const getUser = () => {
