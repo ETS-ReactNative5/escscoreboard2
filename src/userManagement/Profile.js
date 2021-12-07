@@ -76,6 +76,7 @@ const Profile = () => {
           <img src={getFlagForCountryNew(nf.country)} className="event__flag" />
           <div className="event__title">{nf.nf}</div>
           <div className="event__date">{nf.final_date}</div>
+          {nf.open ? "": <div className="event__points">{nf.points}</div>}
         </div>
         <select
           required
