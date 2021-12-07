@@ -265,12 +265,33 @@ const Profile = () => {
               return 0;
             })
             .map((nf) => {
+              if (!nf.open){
+                return
+              }
               if (nf.entries.length === 0) return undefined;
               return countryBox(nf);
             })}
           <button className="btn btn--primary" onClick={submitVote}>
             Submit Your Prediction
           </button>
+          <h3>
+            {ballot.find(nf => !nf.open) ?
+            "Closed Predictions" : ""
+            }
+          </h3>
+          {ballot
+            .sort((nf1, nf2) => {
+              if (nf1.final_date < nf2.final_date) return -1;
+              if (nf2.final_date < nf1.final_date) return 1;
+              return 0;
+            })
+            .map((nf) => {
+              if (nf.open){
+                return
+              }
+              if (nf.entries.length === 0) return undefined;
+              return countryBox(nf);
+            })}
           <h3>Predictions Not Available Yet</h3>
           {ballot
             .sort((nf1, nf2) => {
