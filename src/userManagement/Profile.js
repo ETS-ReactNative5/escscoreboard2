@@ -158,7 +158,7 @@ const Profile = () => {
           name +
           "! You've got a total of " +
           myScore +
-          " points. You're current rank is #" +
+          " points. Your current rank is #" +
           myRank +
           " out of " +
           totalUsers +
