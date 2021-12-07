@@ -34,30 +34,18 @@ export default function PasswordReset(props) {
             .then((response) => {
                 const { status } = response
                 const isValid = status >= 200 && status <= 299
-
-                let loginError
-                if (status === 400) {
-                    loginError = 'credentials'
-                } else if (status === 405) {
-                    loginError = 'method'
-                } else if (/^5\d\d$/.test(status.toString())) {
-                    loginError = 'internal'
-                }
-
-                return isValid ? response : Promise.reject(loginError)
+                return {"isValid": isValid, "response": response}
+                // return isValid ? response : Promise.reject(loginError)
             })
-            .then(async (response) => {
-                const parsedResponse = await response.json()
-                if (parsedResponse.redirectVerifyUrl) {
-                    window.location.assign(parsedResponse.redirectVerifyUrl)
+            .then(async (r) => {
+                const parsedResponse = await r.response.json()
+                if (r.isValid === false){
+                    setErrorMessage(parsedResponse.password[0])
+                    return Promise.reject("failed")
                 }
-                return parsedResponse
             })
             .then(
                 (response) => {
-                    storeToken(response.access)
-                    storeRefreshToken(response.refresh || '')
-                    setHasUserBeenLoggedIn()
                     return true
                 }
             ).catch(
@@ -66,7 +54,6 @@ export default function PasswordReset(props) {
                     return false
                 }
             )
-
     }
 
     const handleSubmitClick = async (e) => {
@@ -96,7 +83,7 @@ export default function PasswordReset(props) {
     };
 
     if (shouldRedirect) {
-        window.location.href = "/profile";
+        window.location.href = "/login";
     }
 
     return (
