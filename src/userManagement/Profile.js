@@ -72,23 +72,24 @@ const Profile = () => {
     }
     return (
       <div key={nf.id} className="event">
-        <img src={getFlagForCountryNew(nf.country)} className="event__flag" />
-        <div className="event__title">
-          {nf.nf}
-          <span className="event__date">{nf.final_date}</span>
+        <div className="event__details">
+          <img src={getFlagForCountryNew(nf.country)} className="event__flag" />
+          <div className="event__title">{nf.nf}</div>
+          <div className="event__date">{nf.final_date}</div>
         </div>
         <select
+          required
           className="event__selection"
           onChange={(event) => {
             const selectedEntry = event.target.value;
-            console.log(selectedEntry)
+            console.log(selectedEntry);
             finalVotes.find((x) => x.show_id === nf.id).entry_id =
               parseInt(selectedEntry) || -1;
             console.log(finalVotes);
           }}
           disabled={!nf.open}
         >
-          <option key={null} value={null} selected={currentVote === -1}>
+          <option key={null} value="" selected={currentVote === -1}>
             Choose your prediction...
           </option>
 
@@ -159,39 +160,13 @@ const Profile = () => {
           myScore +
           " points. You're current rank is #" +
           myRank +
-          " out of "+totalUsers+" players."}
+          " out of " +
+          totalUsers +
+          " players."}
       </div>
       <div className="dashboard">
-        <div className="events">
-          <h3>Open Predictions</h3>
-          {ballot
-            .sort((nf1, nf2) => {
-              if (nf1.final_date < nf2.final_date) return -1;
-              if (nf2.final_date < nf1.final_date) return 1;
-              return 0;
-            })
-            .map((nf) => {
-              if (nf.entries.length === 0) return undefined;
-              return countryBox(nf);
-            })}
-          <button className="btn btn--primary" onClick={submitVote}>
-            Submit Your Prediction
-          </button>
-          <h3>Predictions Not Available Yet</h3>
-          {ballot
-            .sort((nf1, nf2) => {
-              if (nf1.final_date < nf2.final_date) return -1;
-              if (nf2.final_date < nf1.final_date) return 1;
-              return 0;
-            })
-            .map((nf) => {
-              if (nf.entries.length > 0) return undefined;
-              return countryBox(nf);
-            })}
-          <ToastContainer />
-        </div>
         <aside className="sidebar">
-          <img src="/img/logo.png"/>
+          <img src="/img/logo.png" />
           <div className="profile">
             <h3>Your Profile</h3>
             <form className="form">
@@ -245,17 +220,17 @@ const Profile = () => {
             <div className="leaderboard__list">
               {leaderboard.length > 0 &&
                 leaderboard.map((entry) => {
-                  let className = "leaderboard__item user"
-                  let name = entry.first_name
-                  let score = entry.score
-                  let rank = entry.rank
-                  let country = entry.country
-                  if(entry.id === id){
-                    className = "user user--highlighted"
-                    name = currentName
-                    country = currentCountry
-                    score = myScore
-                    rank = myRank
+                  let className = "leaderboard__item user";
+                  let name = entry.first_name;
+                  let score = entry.score;
+                  let rank = entry.rank;
+                  let country = entry.country;
+                  if (entry.id === id) {
+                    className = "user user--highlighted";
+                    name = currentName;
+                    country = currentCountry;
+                    score = myScore;
+                    rank = myRank;
                   }
                   return (
                     <div className={className}>
@@ -281,6 +256,34 @@ const Profile = () => {
             </div>
           </div>
         </aside>
+        <div className="events">
+          <h3>Open Predictions</h3>
+          {ballot
+            .sort((nf1, nf2) => {
+              if (nf1.final_date < nf2.final_date) return -1;
+              if (nf2.final_date < nf1.final_date) return 1;
+              return 0;
+            })
+            .map((nf) => {
+              if (nf.entries.length === 0) return undefined;
+              return countryBox(nf);
+            })}
+          <button className="btn btn--primary" onClick={submitVote}>
+            Submit Your Prediction
+          </button>
+          <h3>Predictions Not Available Yet</h3>
+          {ballot
+            .sort((nf1, nf2) => {
+              if (nf1.final_date < nf2.final_date) return -1;
+              if (nf2.final_date < nf1.final_date) return 1;
+              return 0;
+            })
+            .map((nf) => {
+              if (nf.entries.length > 0) return undefined;
+              return countryBox(nf);
+            })}
+          <ToastContainer />
+        </div>
       </div>
     </div>
   );

@@ -22,11 +22,10 @@ export default function LoginForm(props) {
       const status = await postLogin({ email: username, password: password });
       if (status >= 200 && status <= 299) {
         setShouldRedirect(true);
-      }
-      else if (status === 401){
-        setErrorMessage("Username or password incorrect")
+      } else if (status === 401) {
+        setErrorMessage("Username or password incorrect");
       } else {
-       setErrorMessage("Something went wrong: Error code "+ status)
+        setErrorMessage("Something went wrong: Error code " + status);
       }
     }
   };
@@ -83,20 +82,18 @@ export default function LoginForm(props) {
         >
           Login
         </button>
-        <br/>
-        {errorMessage}
-        <br/>
+        <div className="message message--error">{errorMessage}</div>
         <div className="register">
-          <span class="auth__question">Don't have an account?</span>
-          <Link to={`register`}>
-            <button className="btn btn--secondary">Register</button>
-          </Link>
-          <br/>
-          <span className="auth__question">Forgot your password?</span>
-          <Link to={`/forgot-password`}>
-            <button className="btn btn--secondary">Reset</button>
-          </Link>
-
+          <div class="auth__question">
+            Don't have an account?
+            <Link to={`register`} className="btn btn--secondary">
+              Register
+            </Link>
+          </div>
+          <div className="auth__question">
+            Forgot your password?
+            <Link to={`/forgot-password`} className="link link--underlined">Reset your password</Link>
+          </div>
         </div>
       </form>
     </div>
