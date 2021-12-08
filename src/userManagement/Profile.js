@@ -5,6 +5,7 @@ import { getFlagForCountryNew } from "../images";
 import { baseUrl, countryListAlpha2 } from "../constants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {EurovisionVote} from "../vote";
 
 const Profile = () => {
   const [name, setName] = useState("");
@@ -18,6 +19,7 @@ const Profile = () => {
   const [leaderboard, setLeaderboard] = useState([]);
   const [myRank, setMyRank] = useState(0);
   const [myScore, setMyScore] = useState(0);
+  const [page, setPage] = useState("prediction")
 
   const fetchuser = () => {
     fetch(baseUrl + "api/user/", { headers: authHeaders })
@@ -152,6 +154,59 @@ const Profile = () => {
     // await fetchuser();
   };
 
+  const NFPrediction = () => {
+    return (
+      <div>
+        <h3>Open Predictions</h3>
+        {ballot
+            .sort((nf1, nf2) => {
+              if (nf1.final_date < nf2.final_date) return -1;
+              if (nf2.final_date < nf1.final_date) return 1;
+              return 0;
+            })
+            .map((nf) => {
+              if (!nf.open){
+                return
+              }
+              if (nf.entries.length === 0) return undefined;
+              return countryBox(nf);
+            })}
+        <button className="btn btn--primary" onClick={submitVote}>
+          Submit Your Prediction
+        </button>
+        <h3>
+          {ballot.find(nf => !nf.open) ?
+              "Closed Predictions" : ""
+          }
+        </h3>
+        {ballot
+            .sort((nf1, nf2) => {
+              if (nf1.final_date < nf2.final_date) return -1;
+              if (nf2.final_date < nf1.final_date) return 1;
+              return 0;
+            })
+            .map((nf) => {
+              if (nf.open){
+                return
+              }
+              if (nf.entries.length === 0) return undefined;
+              return countryBox(nf);
+            })}
+        <h3>Predictions Not Available Yet</h3>
+        {ballot
+            .sort((nf1, nf2) => {
+              if (nf1.final_date < nf2.final_date) return -1;
+              if (nf2.final_date < nf1.final_date) return 1;
+              return 0;
+            })
+            .map((nf) => {
+              if (nf.entries.length > 0) return undefined;
+              return countryBox(nf);
+            })}
+      </div>)
+  }
+
+
   return (
     <div>
       <div className="ribbon">
@@ -258,52 +313,17 @@ const Profile = () => {
           </div>
         </aside>
         <div className="events">
-          <h3>Open Predictions</h3>
-          {ballot
-            .sort((nf1, nf2) => {
-              if (nf1.final_date < nf2.final_date) return -1;
-              if (nf2.final_date < nf1.final_date) return 1;
-              return 0;
-            })
-            .map((nf) => {
-              if (!nf.open){
-                return
-              }
-              if (nf.entries.length === 0) return undefined;
-              return countryBox(nf);
-            })}
-          <button className="btn btn--primary" onClick={submitVote}>
-            Submit Your Prediction
-          </button>
-          <h3>
-            {ballot.find(nf => !nf.open) ?
-            "Closed Predictions" : ""
-            }
-          </h3>
-          {ballot
-            .sort((nf1, nf2) => {
-              if (nf1.final_date < nf2.final_date) return -1;
-              if (nf2.final_date < nf1.final_date) return 1;
-              return 0;
-            })
-            .map((nf) => {
-              if (nf.open){
-                return
-              }
-              if (nf.entries.length === 0) return undefined;
-              return countryBox(nf);
-            })}
-          <h3>Predictions Not Available Yet</h3>
-          {ballot
-            .sort((nf1, nf2) => {
-              if (nf1.final_date < nf2.final_date) return -1;
-              if (nf2.final_date < nf1.final_date) return 1;
-              return 0;
-            })
-            .map((nf) => {
-              if (nf.entries.length > 0) return undefined;
-              return countryBox(nf);
-            })}
+          <button onClick={(e) => {
+            e.preventDefault()
+            setPage("prediction")
+          }}>Prediction</button>
+          <button onClick={(e) => {
+            e.preventDefault()
+            setPage("eurovision")
+          }}>XTRA VOTE - ESC 2022</button>
+
+          {page === "prediction" ? <NFPrediction  /> : ""}
+          {page === "eurovision" ? <EurovisionVote/> : ""}
           <ToastContainer />
         </div>
       </div>
