@@ -6,6 +6,7 @@ import Profile from "./userManagement/Profile";
 import PasswordReset from "./userManagement/PasswordReset";
 import CheckYourEmail from "./userManagement/CheckEmail";
 import ForgotPassword from "./userManagement/ForgotPassword";
+import {EurovisionVote } from "./vote";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route exact path="/reset-confirm" component={CheckYourEmail} />
         <Route exact path="/forgot-password" component={ForgotPassword} />
         <Route exact path="/reset-password" component={PasswordReset} />
+        <Route exact path="/vote" component={EurovisionVote} />
         <Route path="/" component={LoginForm} />
       </Switch>
     </Router>
