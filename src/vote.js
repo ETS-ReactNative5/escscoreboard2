@@ -20,7 +20,6 @@ export function EurovisionVote() {
     const [songs, setSongs] = useState([])
 
     const fetchsongs = () => {
-        console.log("fetchiiing")
         fetch(baseUrl + "songs/", { headers: authHeaders })
             .then((response) => {
                 if (response.status === 403 || response.status === 401) {
@@ -50,12 +49,13 @@ export function EurovisionVote() {
 
   const votingButtonComponent = (entry, index) => {
     return (
-    <div className="event__details">
+    <div className="esc_event__details draggable">
+        <span className={"country__rank"}>#{index + 1 } </span>
         <span className={"country__flag"}>
           <img src={getFlagForCountryNew(entry.country)} className="event__flag" />
         </span>
         <span className={"country__name"}>
-          {index + 1} {entry.artist} - {entry.title}
+          {entry.artist} - {entry.title}
         </span>
       </div>
     );

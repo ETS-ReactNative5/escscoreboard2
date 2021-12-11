@@ -313,15 +313,16 @@ const Profile = () => {
           </div>
         </aside>
         <div className="events">
-          <button onClick={(e) => {
-            e.preventDefault()
-            setPage("prediction")
-          }}>Prediction</button>
-          <button onClick={(e) => {
-            e.preventDefault()
-            setPage("eurovision")
-          }}>XTRA VOTE - ESC 2022</button>
-
+          <div className="gameselection">
+            <button className={page === "prediction"? "btn btn--primary": "btn btn--secondary"} onClick={(e) => {
+              e.preventDefault()
+              setPage("prediction")
+            }}>Prediction</button>
+            <button className={page === "eurovision"? "btn btn--primary": "btn btn--secondary"} onClick={(e) => {
+              e.preventDefault()
+              setPage("eurovision")
+            }}>XTRA VOTE - ESC 2022</button>
+          </div>
           {page === "prediction" ? <NFPrediction  /> : ""}
           {page === "eurovision" ? <EurovisionVote/> : ""}
           <ToastContainer />

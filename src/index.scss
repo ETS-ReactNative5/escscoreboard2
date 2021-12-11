@@ -115,6 +115,22 @@ img {
   }
 }
 
+.gameselection {
+  text-align: center;
+  display: block;
+}
+
+
+.esc_event__details {
+  position: relative;
+  padding: 0.5rem 0.5rem 0.5rem 3rem;
+}
+
+.draggable {
+  cursor: move;
+
+}
+
 .events {
   grid-column: 2 / 3;
 }
