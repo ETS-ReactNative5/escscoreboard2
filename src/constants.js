@@ -249,6 +249,7 @@ export const fullFlagMap = {
   ZM: "ZM.svg",
   ZW: "ZW.svg",
   XX: "XX.svg",
+  XK: "XK.svg",
 };
 
 export const baseUrl = "https://django-cloudrun-4fdxp3ewaq-ew.a.run.app/";
