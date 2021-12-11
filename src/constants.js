@@ -504,4 +504,5 @@ export const countryListAlpha2 = {
   ZM: "Zambia",
   ZW: "Zimbabwe",
   AX: "Åland Islands",
+  XK: "Kosovo",
 };
