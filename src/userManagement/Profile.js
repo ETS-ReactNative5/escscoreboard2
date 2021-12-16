@@ -5,6 +5,7 @@ import { getFlagForCountryNew } from "../images";
 import { baseUrl, countryListAlpha2 } from "../constants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { EurovisionVote } from "../vote";
 
 const Profile = () => {
   const [name, setName] = useState("");
@@ -18,6 +19,8 @@ const Profile = () => {
   const [leaderboard, setLeaderboard] = useState([]);
   const [myRank, setMyRank] = useState(0);
   const [myScore, setMyScore] = useState(0);
+  const [page, setPage] = useState("prediction");
+  const [isSuperuser, setIsSuperuser] = useState(false);
 
   const fetchuser = () => {
     fetch(baseUrl + "api/user/", { headers: authHeaders })
@@ -36,6 +39,7 @@ const Profile = () => {
         setCountry(data[0].country);
         setId(data[0].id);
         setCurrentCountry(data[0].country);
+        setIsSuperuser("superuser" in data[0] ? data[0].superuser:false);
         setBallot(data[0].votes);
         const votes = data[0].votes.map((nf) => {
           const votedEntry = nf.entries.find((entry) => entry.voted === true);
@@ -70,11 +74,21 @@ const Profile = () => {
     if (nfvote) {
       currentVote = nfvote.entry_id;
     }
+    let classname = "event"
+    if (!nf.open){
+      classname = "event event--closed"
+    }
+    else if (!nf.final_date){
+      classname = "event event--unavailable"
+    }
     return (
-      <div key={nf.id} className="event">
+      <div key={nf.id} className={classname}>
         <div className="event__details">
           <img src={getFlagForCountryNew(nf.country)} className="event__flag" />
-          <div className="event__title">{nf.nf}</div>
+          <div className="event__title">
+            {nf.nf}
+          </div>
+          {nf.open ? "" : <div className="event__points">{nf.points}</div>}
           <div className="event__date">{nf.final_date}</div>
         </div>
         <select
@@ -149,6 +163,55 @@ const Profile = () => {
         console.log(e);
       });
     // await fetchuser();
+  };
+
+  const NFPrediction = () => {
+    return (
+      <div>
+        <h3>Open Predictions</h3>
+        {ballot
+          .sort((nf1, nf2) => {
+            if (nf1.final_date < nf2.final_date) return -1;
+            if (nf2.final_date < nf1.final_date) return 1;
+            return 0;
+          })
+          .map((nf) => {
+            if (!nf.open) {
+              return;
+            }
+            if (nf.entries.length === 0) return undefined;
+            return countryBox(nf);
+          })}
+        <button className="btn btn--primary" onClick={submitVote}>
+          Submit Your Prediction
+        </button>
+        <h3>{ballot.find((nf) => !nf.open) ? "Closed Predictions" : ""}</h3>
+        {ballot
+          .sort((nf1, nf2) => {
+            if (nf1.final_date < nf2.final_date) return -1;
+            if (nf2.final_date < nf1.final_date) return 1;
+            return 0;
+          })
+          .map((nf) => {
+            if (nf.open) {
+              return;
+            }
+            if (nf.entries.length === 0) return undefined;
+            return countryBox(nf);
+          })}
+        <h3>Predictions Not Available Yet</h3>
+        {ballot
+          .sort((nf1, nf2) => {
+            if (nf1.final_date < nf2.final_date) return -1;
+            if (nf2.final_date < nf1.final_date) return 1;
+            return 0;
+          })
+          .map((nf) => {
+            if (nf.entries.length > 0) return undefined;
+            return countryBox(nf);
+          })}
+      </div>
+    );
   };
 
   return (
@@ -257,31 +320,37 @@ const Profile = () => {
           </div>
         </aside>
         <div className="events">
-          <h3>Open Predictions</h3>
-          {ballot
-            .sort((nf1, nf2) => {
-              if (nf1.final_date < nf2.final_date) return -1;
-              if (nf2.final_date < nf1.final_date) return 1;
-              return 0;
-            })
-            .map((nf) => {
-              if (nf.entries.length === 0) return undefined;
-              return countryBox(nf);
-            })}
-          <button className="btn btn--primary" onClick={submitVote}>
-            Submit Your Prediction
-          </button>
-          <h3>Predictions Not Available Yet</h3>
-          {ballot
-            .sort((nf1, nf2) => {
-              if (nf1.final_date < nf2.final_date) return -1;
-              if (nf2.final_date < nf1.final_date) return 1;
-              return 0;
-            })
-            .map((nf) => {
-              if (nf.entries.length > 0) return undefined;
-              return countryBox(nf);
-            })}
+          {isSuperuser?(
+            <nav className="navigation">
+            <button
+              className={
+                page === "prediction"
+                  ? "btn btn--primary"
+                  : "btn btn--secondary"
+              }
+              onClick={(e) => {
+                e.preventDefault();
+                setPage("prediction");
+              }}
+            >
+              Prediction
+            </button>
+            <button
+              className={
+                page === "eurovision"
+                  ? "btn btn--primary"
+                  : "btn btn--secondary"
+              }
+              onClick={(e) => {
+                e.preventDefault();
+                setPage("eurovision");
+              }}
+            >
+              XTRA VOTE - ESC 2022
+            </button>
+            </nav>) : (<div></div>)}
+          {page === "prediction" ? <NFPrediction /> : ""}
+          {page === "eurovision" ? <EurovisionVote /> : ""}
           <ToastContainer />
         </div>
       </div>
