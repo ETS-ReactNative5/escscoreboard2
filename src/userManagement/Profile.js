@@ -20,6 +20,7 @@ const Profile = () => {
   const [myRank, setMyRank] = useState(0);
   const [myScore, setMyScore] = useState(0);
   const [page, setPage] = useState("prediction");
+  const [isSuperuser, setIsSuperuser] = useState(false);
 
   const fetchuser = () => {
     fetch(baseUrl + "api/user/", { headers: authHeaders })
@@ -38,6 +39,7 @@ const Profile = () => {
         setCountry(data[0].country);
         setId(data[0].id);
         setCurrentCountry(data[0].country);
+        setIsSuperuser("superuser" in data[0] ? data[0].superuser:false);
         setBallot(data[0].votes);
         const votes = data[0].votes.map((nf) => {
           const votedEntry = nf.entries.find((entry) => entry.voted === true);
@@ -72,8 +74,15 @@ const Profile = () => {
     if (nfvote) {
       currentVote = nfvote.entry_id;
     }
+    let classname = "event"
+    if (!nf.open){
+      classname = "event event--closed"
+    }
+    else if (!nf.final_date){
+      classname = "event event--unavailable"
+    }
     return (
-      <div key={nf.id} className="event">
+      <div key={nf.id} className={classname}>
         <div className="event__details">
           <img src={getFlagForCountryNew(nf.country)} className="event__flag" />
           <div className="event__title">
@@ -311,7 +320,8 @@ const Profile = () => {
           </div>
         </aside>
         <div className="events">
-          <nav className="navigation">
+          {isSuperuser?(
+            <nav className="navigation">
             <button
               className={
                 page === "prediction"
@@ -338,7 +348,7 @@ const Profile = () => {
             >
               XTRA VOTE - ESC 2022
             </button>
-          </nav>
+            </nav>) : (<div></div>)}
           {page === "prediction" ? <NFPrediction /> : ""}
           {page === "eurovision" ? <EurovisionVote /> : ""}
           <ToastContainer />
