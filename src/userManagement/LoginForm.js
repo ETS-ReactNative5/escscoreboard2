@@ -90,7 +90,7 @@ export default function LoginForm(props) {
             </Link>
           </div>
           <div className="auth__question">
-            Forgot your password?
+            Forgot your details?
             <Link to={`/forgot-password`} className="link link--underlined">Reset your password</Link>
           </div>
         </div>
