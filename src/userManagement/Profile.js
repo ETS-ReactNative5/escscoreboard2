@@ -78,7 +78,7 @@ const Profile = () => {
     if (!nf.open){
       classname = "event event--closed"
     }
-    else if (!nf.final_date){
+    else if (!nf.entries.length){
       classname = "event event--unavailable"
     }
     return (
