@@ -11,7 +11,6 @@ import countries, {
 import { getFlagForCountry, getFlagForCountryNew } from "./images";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-import queryString from "query-string";
 import { authHeaders } from "./userManagement/utils";
 import { toast } from "react-toastify";
 
