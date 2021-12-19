@@ -214,6 +214,11 @@ const Profile = () => {
     );
   };
 
+  const goToFull = (e) => {
+    e.preventDefault();
+    window.location.href = "/leaderboard";
+  }
+
   return (
     <div>
       <div className="ribbon">
@@ -316,6 +321,7 @@ const Profile = () => {
                 <div className="user__name">{name}</div>
                 <div className="user__score">{myScore}</div>
               </div>
+              <button className={"btn btn--secondary"} onClick={(e) => goToFull(e)}>Full results</button>
             </div>
           </div>
         </aside>
