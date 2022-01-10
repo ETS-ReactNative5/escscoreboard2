@@ -39,7 +39,7 @@ const Profile = () => {
         setCountry(data[0].country);
         setId(data[0].id);
         setCurrentCountry(data[0].country);
-        setIsSuperuser("superuser" in data[0] ? data[0].superuser:false);
+        setIsSuperuser("superuser" in data[0] ? data[0].superuser : false);
         setBallot(data[0].votes);
         const votes = data[0].votes.map((nf) => {
           const votedEntry = nf.entries.find((entry) => entry.voted === true);
@@ -74,21 +74,22 @@ const Profile = () => {
     if (nfvote) {
       currentVote = nfvote.entry_id;
     }
-    let classname = "event"
-    if (!nf.open){
-      classname = "event event--closed"
-    }
-    else if (!nf.entries.length){
-      classname = "event event--unavailable"
+    let classname = "event";
+    if (!nf.open) {
+      classname = "event event--closed";
+    } else if (!nf.entries.length) {
+      classname = "event event--unavailable";
     }
     return (
       <div key={nf.id} className={classname}>
         <div className="event__details">
           <img src={getFlagForCountryNew(nf.country)} className="event__flag" />
-          <div className="event__title">
-            {nf.nf}
-          </div>
-          {nf.open ? "" : <div className="event__points">{nf.points}</div>}
+          <div className="event__title">{nf.nf}</div>
+          {nf.open ? (
+            ""
+          ) : (
+            <div className="event__points">{nf.points} points</div>
+          )}
           <div className="event__date">{nf.final_date}</div>
         </div>
         <select
@@ -167,8 +168,8 @@ const Profile = () => {
 
   const NFPrediction = () => {
     return (
-      <div>
-        <h3>Open Predictions</h3>
+      <div className="prediction">
+        <h3 className="heading heading--open">Open Predictions</h3>
         {ballot
           .sort((nf1, nf2) => {
             if (nf1.final_date < nf2.final_date) return -1;
@@ -185,7 +186,7 @@ const Profile = () => {
         <button className="btn btn--primary" onClick={submitVote}>
           Submit Your Prediction
         </button>
-        <h3>{ballot.find((nf) => !nf.open) ? "Closed Predictions" : ""}</h3>
+        <h3 className="heading heading--closed">{ballot.find((nf) => !nf.open) ? "Closed Predictions" : ""}</h3>
         {ballot
           .sort((nf1, nf2) => {
             if (nf1.final_date < nf2.final_date) return -1;
@@ -199,7 +200,7 @@ const Profile = () => {
             if (nf.entries.length === 0) return undefined;
             return countryBox(nf);
           })}
-        <h3>Predictions Not Available Yet</h3>
+        <h3 className="heading heading--unavailable">Predictions Not Available Yet</h3>
         {ballot
           .sort((nf1, nf2) => {
             if (nf1.final_date < nf2.final_date) return -1;
@@ -214,24 +215,42 @@ const Profile = () => {
     );
   };
 
+  const goToFull = (e) => {
+    e.preventDefault();
+    window.location.href = "/leaderboard";
+  };
+
   return (
     <div>
       <div className="ribbon">
-        {"Welcome, " +
-          name +
-          "! You've got a total of " +
-          myScore +
-          " points. Your current rank is #" +
-          myRank +
-          " out of " +
-          totalUsers +
-          " players."}
+        <div className="container">
+          <div className="ribbon__notice">
+            {"Welcome, " +
+              name +
+              "! You have " +
+              myScore +
+              " points and you're currently placed #" +
+              myRank +
+              " out of " +
+              totalUsers +
+              " players."}
+          </div>
+          <div className="ribbon__user">
+            <div className="ribbon__action ribbon__action--user">{ name }</div>
+            <button
+              className="ribbon__action ribbon__action--log-out"
+              onClick={async (e) => await logout(e)}
+            >
+              Log Out
+            </button>
+          </div>
+        </div>
       </div>
       <div className="dashboard">
         <aside className="sidebar">
           <img src="/img/logo.png" />
           <div className="profile">
-            <h3>Your Profile</h3>
+            <h3 className="heading heading--profile">Your Profile</h3>
             <form className="form">
               <div className="form__element">
                 <label className="form__label">Name</label>
@@ -268,18 +287,12 @@ const Profile = () => {
                 className="btn btn--primary"
                 onClick={async (e) => await updateProfile(e)}
               >
-                Update your profile
-              </button>
-              <button
-                className="btn btn--secondary"
-                onClick={async (e) => await logout(e)}
-              >
-                Logout
+                Update Your Profile
               </button>
             </form>
           </div>
           <div className="leaderboard">
-            <h3>Leaderboard</h3>
+            <h3 className="heading heading--leaderboard">Leaderboard</h3>
             <div className="leaderboard__list">
               {leaderboard.length > 0 &&
                 leaderboard.map((entry) => {
@@ -316,44 +329,72 @@ const Profile = () => {
                 <div className="user__name">{name}</div>
                 <div className="user__score">{myScore}</div>
               </div>
+              <button
+                className={"btn btn--secondary"}
+                onClick={(e) => goToFull(e)}
+              >
+                Full Leaderboard
+              </button>
             </div>
           </div>
         </aside>
         <div className="events">
-          {isSuperuser?(
+          {isSuperuser ? (
             <nav className="navigation">
-            <button
-              className={
-                page === "prediction"
-                  ? "btn btn--primary"
-                  : "btn btn--secondary"
-              }
-              onClick={(e) => {
-                e.preventDefault();
-                setPage("prediction");
-              }}
-            >
-              Prediction
-            </button>
-            <button
-              className={
-                page === "eurovision"
-                  ? "btn btn--primary"
-                  : "btn btn--secondary"
-              }
-              onClick={(e) => {
-                e.preventDefault();
-                setPage("eurovision");
-              }}
-            >
-              XTRA VOTE - ESC 2022
-            </button>
-            </nav>) : (<div></div>)}
+              <button
+                className={
+                  page === "prediction"
+                    ? "btn btn--primary"
+                    : "btn btn--secondary"
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage("prediction");
+                }}
+              >
+                Prediction
+              </button>
+              <button
+                className={
+                  page === "eurovision"
+                    ? "btn btn--primary"
+                    : "btn btn--secondary"
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage("eurovision");
+                }}
+              >
+                XTRA VOTE - ESC 2022
+              </button>
+            </nav>
+          ) : (
+            <div></div>
+          )}
           {page === "prediction" ? <NFPrediction /> : ""}
           {page === "eurovision" ? <EurovisionVote /> : ""}
           <ToastContainer />
         </div>
       </div>
+      <footer className="footer">
+        <nav>
+          <ul>
+            <li>
+              <a href="https://escxtra.com" target="_blank">
+                Go to ESCXTRA
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://escxtra.com/2021/12/07/how-to-play-eurovision-prediction-2022/"
+                target="_blank"
+              >
+                How to Play
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </footer>
     </div>
   );
 };
