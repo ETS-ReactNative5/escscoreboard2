@@ -7,7 +7,7 @@ import PasswordReset from "./userManagement/PasswordReset";
 import CheckYourEmail from "./userManagement/CheckEmail";
 import ForgotPassword from "./userManagement/ForgotPassword";
 import {EurovisionVote } from "./vote";
-import Leaderboard from "./userManagement/fullRankings";
+import Leaderboard from "./userManagement/Leaderboard";
 
 export default function App() {
   return (
