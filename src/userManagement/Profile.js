@@ -21,10 +21,13 @@ const Profile = () => {
   const [myScore, setMyScore] = useState(0);
   const [page, setPage] = useState("prediction");
   const [isSuperuser, setIsSuperuser] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchuser = () => {
+    setIsLoading(true)
     fetch(baseUrl + "api/user/", { headers: authHeaders })
       .then((response) => {
+        setIsLoading(false)
         if (response.status === 403 || response.status === 401) {
           window.location.href = "/login";
         }
@@ -246,6 +249,10 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      {isLoading?
+          <div className={"dashboard"}>
+            Loading....
+          </div>: (
       <div className="dashboard">
         <aside className="sidebar">
           <img src="/img/logo.png" />
@@ -376,6 +383,7 @@ const Profile = () => {
           <ToastContainer />
         </div>
       </div>
+          )}
       <footer className="footer">
         <nav>
           <ul>
