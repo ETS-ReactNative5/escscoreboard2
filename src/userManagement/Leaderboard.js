@@ -41,15 +41,20 @@ export default function Leaderboard(props) {
   return (
     <div>
       <div className="ribbon">
-        {"Welcome, " +
-          name +
-          "! You've got a total of " +
-          myScore +
-          " points. Your current rank is #" +
-          myRank +
-          " out of " +
-          totalUsers +
-          " players."}
+        <div className="container">
+          <div className="ribbon__notice">
+            {"You have " +
+              myScore +
+              " points and you're currently placed #" +
+              myRank +
+              " out of " +
+              totalUsers +
+              " players."}
+          </div>
+          <div className="ribbon__user">
+            <div className="ribbon__action ribbon__action--user">{name}</div>
+          </div>
+        </div>
       </div>
       <div className="dashboard">
         <aside className="sidebar">
