@@ -27,9 +27,9 @@ export default function Leaderboard(props) {
       .then((data) => {
         setLeaderboard(data.leaderboard);
         setmyId(data.myId);
-        setMyRank(data[0].leaderboard.my_ranking);
-        setMyScore(data[0].leaderboard.my_score);
-        setTotalUsers(data[0].leaderboard.total_users);
+        setMyRank(data.my_ranking);
+        setMyScore(data.my_score);
+        setTotalUsers(data.total_users);
       });
   };
   useEffect(() => fetchLeaderboard(), []);
