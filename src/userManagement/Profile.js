@@ -21,10 +21,13 @@ const Profile = () => {
   const [myScore, setMyScore] = useState(0);
   const [page, setPage] = useState("prediction");
   const [isSuperuser, setIsSuperuser] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchuser = () => {
+    setIsLoading(true);
     fetch(baseUrl + "api/user/", { headers: authHeaders })
       .then((response) => {
+        setIsLoading(false);
         if (response.status === 403 || response.status === 401) {
           window.location.href = "/login";
         }
@@ -186,7 +189,9 @@ const Profile = () => {
         <button className="btn btn--primary" onClick={submitVote}>
           Submit Your Prediction
         </button>
-        <h3 className="heading heading--closed">{ballot.find((nf) => !nf.open) ? "Closed Predictions" : ""}</h3>
+        <h3 className="heading heading--closed">
+          {ballot.find((nf) => !nf.open) ? "Closed Predictions" : ""}
+        </h3>
         {ballot
           .sort((nf1, nf2) => {
             if (nf1.final_date < nf2.final_date) return -1;
@@ -200,7 +205,9 @@ const Profile = () => {
             if (nf.entries.length === 0) return undefined;
             return countryBox(nf);
           })}
-        <h3 className="heading heading--unavailable">Predictions Not Available Yet</h3>
+        <h3 className="heading heading--unavailable">
+          Predictions Not Available Yet
+        </h3>
         {ballot
           .sort((nf1, nf2) => {
             if (nf1.final_date < nf2.final_date) return -1;
@@ -225,9 +232,7 @@ const Profile = () => {
       <div className="ribbon">
         <div className="container">
           <div className="ribbon__notice">
-            {"Welcome, " +
-              name +
-              "! You have " +
+            {"You have " +
               myScore +
               " points and you're currently placed #" +
               myRank +
@@ -236,7 +241,7 @@ const Profile = () => {
               " players."}
           </div>
           <div className="ribbon__user">
-            <div className="ribbon__action ribbon__action--user">{ name }</div>
+            <div className="ribbon__action ribbon__action--user">{name}</div>
             <button
               className="ribbon__action ribbon__action--log-out"
               onClick={async (e) => await logout(e)}
@@ -246,136 +251,144 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="dashboard">
-        <aside className="sidebar">
-          <img src="/img/logo.png" />
-          <div className="profile">
-            <h3 className="heading heading--profile">Your Profile</h3>
-            <form className="form">
-              <div className="form__element">
-                <label className="form__label">Name</label>
-                <input
-                  className="form__input"
-                  type={"text"}
-                  value={currentName}
-                  onChange={(event) => setCurrentName(event.target.value)}
-                />
-              </div>
-              <div className="form__element">
-                <label className="form__label">Country</label>
-                <select
-                  className="form__input"
-                  onChange={(e) => setCurrentCountry(e.target.value)}
-                >
-                  {Object.keys(countryListAlpha2).map((countrycode, id) => {
-                    if (countrycode === currentCountry) {
+      {isLoading ? (
+        <div className={"loading"}>Loading...</div>
+      ) : (
+        <div className="dashboard">
+          <aside className="sidebar">
+            <img src="/img/logo.png" />
+            <div className="profile">
+              <h3 className="heading heading--profile">Your Profile</h3>
+              <form className="form">
+                <div className="form__element">
+                  <label className="form__label">Name</label>
+                  <input
+                    className="form__input"
+                    type={"text"}
+                    value={currentName}
+                    onChange={(event) => setCurrentName(event.target.value)}
+                  />
+                </div>
+                <div className="form__element">
+                  <label className="form__label">Country</label>
+                  <select
+                    className="form__input"
+                    onChange={(e) => setCurrentCountry(e.target.value)}
+                  >
+                    {Object.keys(countryListAlpha2).map((countrycode, id) => {
+                      if (countrycode === currentCountry) {
+                        return (
+                          <option
+                            key={countrycode}
+                            value={countrycode}
+                            selected
+                          >
+                            {countryListAlpha2[countrycode]}
+                          </option>
+                        );
+                      }
                       return (
-                        <option key={countrycode} value={countrycode} selected>
+                        <option key={countrycode} value={countrycode}>
                           {countryListAlpha2[countrycode]}
                         </option>
                       );
+                    })}
+                  </select>
+                </div>
+                <button
+                  className="btn btn--primary"
+                  onClick={async (e) => await updateProfile(e)}
+                >
+                  Update Your Profile
+                </button>
+              </form>
+            </div>
+            <div className="leaderboard">
+              <h3 className="heading heading--leaderboard">Leaderboard</h3>
+              <div className="leaderboard__list">
+                {leaderboard.length > 0 &&
+                  leaderboard.map((entry) => {
+                    let className = "leaderboard__item user";
+                    let name = entry.first_name;
+                    let score = entry.score;
+                    let rank = entry.rank;
+                    let country = entry.country;
+                    if (entry.id === id) {
+                      className = "user user--highlighted";
+                      name = currentName;
+                      country = currentCountry;
+                      score = myScore;
+                      rank = myRank;
                     }
                     return (
-                      <option key={countrycode} value={countrycode}>
-                        {countryListAlpha2[countrycode]}
-                      </option>
+                      <div className={className}>
+                        <img
+                          className="user__flag"
+                          src={getFlagForCountryNew(country)}
+                        />
+                        <div className="user__rank">{"#" + rank + " "}</div>
+                        <div className="user__name">{name}</div>
+                        <div className="user__score">{score}</div>
+                      </div>
                     );
                   })}
-                </select>
+                <div className="leaderboard__item user user--highlighted">
+                  <img
+                    className="user__flag"
+                    src={getFlagForCountryNew(country)}
+                  />
+                  <div className="user__rank">{"#" + myRank + " "}</div>
+                  <div className="user__name">{name}</div>
+                  <div className="user__score">{myScore}</div>
+                </div>
+                <button
+                  className={"btn btn--secondary"}
+                  onClick={(e) => goToFull(e)}
+                >
+                  Full Leaderboard
+                </button>
               </div>
-              <button
-                className="btn btn--primary"
-                onClick={async (e) => await updateProfile(e)}
-              >
-                Update Your Profile
-              </button>
-            </form>
-          </div>
-          <div className="leaderboard">
-            <h3 className="heading heading--leaderboard">Leaderboard</h3>
-            <div className="leaderboard__list">
-              {leaderboard.length > 0 &&
-                leaderboard.map((entry) => {
-                  let className = "leaderboard__item user";
-                  let name = entry.first_name;
-                  let score = entry.score;
-                  let rank = entry.rank;
-                  let country = entry.country;
-                  if (entry.id === id) {
-                    className = "user user--highlighted";
-                    name = currentName;
-                    country = currentCountry;
-                    score = myScore;
-                    rank = myRank;
-                  }
-                  return (
-                    <div className={className}>
-                      <img
-                        className="user__flag"
-                        src={getFlagForCountryNew(country)}
-                      />
-                      <div className="user__rank">{"#" + rank + " "}</div>
-                      <div className="user__name">{name}</div>
-                      <div className="user__score">{score}</div>
-                    </div>
-                  );
-                })}
-              <div className="leaderboard__item user user--highlighted">
-                <img
-                  className="user__flag"
-                  src={getFlagForCountryNew(country)}
-                />
-                <div className="user__rank">{"#" + myRank + " "}</div>
-                <div className="user__name">{name}</div>
-                <div className="user__score">{myScore}</div>
-              </div>
-              <button
-                className={"btn btn--secondary"}
-                onClick={(e) => goToFull(e)}
-              >
-                Full Leaderboard
-              </button>
             </div>
+          </aside>
+          <div className="events">
+            {isSuperuser ? (
+              <nav className="navigation">
+                <button
+                  className={
+                    page === "prediction"
+                      ? "btn btn--primary"
+                      : "btn btn--secondary"
+                  }
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPage("prediction");
+                  }}
+                >
+                  Prediction
+                </button>
+                <button
+                  className={
+                    page === "eurovision"
+                      ? "btn btn--primary"
+                      : "btn btn--secondary"
+                  }
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPage("eurovision");
+                  }}
+                >
+                  XTRA VOTE - ESC 2022
+                </button>
+              </nav>
+            ) : (
+              <div></div>
+            )}
+            {page === "prediction" ? <NFPrediction /> : ""}
+            {page === "eurovision" ? <EurovisionVote /> : ""}
+            <ToastContainer />
           </div>
-        </aside>
-        <div className="events">
-          {isSuperuser ? (
-            <nav className="navigation">
-              <button
-                className={
-                  page === "prediction"
-                    ? "btn btn--primary"
-                    : "btn btn--secondary"
-                }
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPage("prediction");
-                }}
-              >
-                Prediction
-              </button>
-              <button
-                className={
-                  page === "eurovision"
-                    ? "btn btn--primary"
-                    : "btn btn--secondary"
-                }
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPage("eurovision");
-                }}
-              >
-                XTRA VOTE - ESC 2022
-              </button>
-            </nav>
-          ) : (
-            <div></div>
-          )}
-          {page === "prediction" ? <NFPrediction /> : ""}
-          {page === "eurovision" ? <EurovisionVote /> : ""}
-          <ToastContainer />
         </div>
-      </div>
+      )}
       <footer className="footer">
         <nav>
           <ul>
