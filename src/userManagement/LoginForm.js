@@ -10,6 +10,7 @@ export default function LoginForm(props) {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleSubmitClick = async (e) => {
     e.preventDefault();
     if (errorMessage !== "") {
@@ -18,7 +19,9 @@ export default function LoginForm(props) {
     if (!username || !password) {
       setErrorMessage("Email and password are mandatory");
     } else {
+      setLoading(true)
       const status = await postLogin({ email: username, password: password });
+      setLoading(false)
       if (status >= 200 && status <= 299) {
         setShouldRedirect(true);
       } else if (status === 401) {
@@ -76,10 +79,11 @@ export default function LoginForm(props) {
           />
         </div>
         <button
-          className="btn btn--primary"
+          className={loading? "btn btn--primary": "btn btn--secondary"}
           onClick={async (e) => await handleSubmitClick(e)}
+          enabled={!loading}
         >
-          Login
+          {loading ? "Logging in..." : "Login" }
         </button>
         <div className="message message--error">{errorMessage}</div>
         <div className="register">
