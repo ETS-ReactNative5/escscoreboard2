@@ -131,7 +131,7 @@ const Profile = () => {
       body: JSON.stringify(finalVotes),
     }).then((response) => {
       if (response.status === 200) {
-        toast.success("You have successfully submited your predictions!");
+        toast.success("You have successfully submitted your predictions!");
       } else {
         toast.error("Something went wrong. Try again, or contact support.");
       }
@@ -194,8 +194,8 @@ const Profile = () => {
         </h3>
         {ballot
           .sort((nf1, nf2) => {
-            if (nf1.final_date < nf2.final_date) return -1;
-            if (nf2.final_date < nf1.final_date) return 1;
+            if (nf1.final_date < nf2.final_date) return 1;
+            if (nf2.final_date < nf1.final_date) return -1;
             return 0;
           })
           .map((nf) => {
