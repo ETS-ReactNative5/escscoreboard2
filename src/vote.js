@@ -60,10 +60,10 @@ export function EurovisionVote() {
           className="event__flag"
         />
         <div className="event__details">
+          <span className={"user__rank"}>#{index + 1} </span>
           <span className={"country__name"}>
             {entry.artist} - {entry.title}
           </span>
-          <span className={"country__rank"}>#{index + 1} </span>
         </div>
       </div>
     );

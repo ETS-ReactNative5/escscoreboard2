@@ -42,7 +42,7 @@ const Profile = () => {
         setCountry(data[0].country);
         setId(data[0].id);
         setCurrentCountry(data[0].country);
-        setIsSuperuser("superuser" in data[0] ? data[0].superuser : false);
+        setIsSuperuser(data[0].is_superuser);
         setBallot(data[0].votes);
         const votes = data[0].votes.map((nf) => {
           const votedEntry = nf.entries.find((entry) => entry.voted === true);
