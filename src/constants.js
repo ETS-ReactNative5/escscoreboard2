@@ -1,6 +1,44 @@
-export const countries = ["italy2012","thenetherlands2013","macedonia2004","russia2001","bosniaandherzegovina2009","spain1991","italy2021","ireland1987","italy2019","greece2006","italy2013","iceland2019","norway2015","germany2006","ireland1980","latvia2000","france2021","iceland1991","spain1973","france2017","latvia2015","norway2013","turkey2010","turkey2003","georgia2007","serbia2012",]
-export const countryNameMap = {"italy2012": "Italy (2012)","thenetherlands2013": "The Netherlands (2013)","macedonia2004": "Macedonia (2004)","russia2001": "Russia (2001)","bosniaandherzegovina2009": "Bosnia and Herzegovina (2009)","spain1991": "Spain (1991)","italy2021": "Italy (2021)","ireland1987": "Ireland (1987)","italy2019": "Italy (2019)","greece2006": "Greece (2006)","italy2013": "Italy (2013)","iceland2019": "Iceland (2019)","norway2015": "Norway (2015)","germany2006": "Germany (2006)","ireland1980": "Ireland (1980)","latvia2000": "Latvia (2000)","france2021": "France (2021)","iceland1991": "Iceland (1991)","spain1973": "Spain (1973)","france2017": "France (2017)","latvia2015": "Latvia (2015)","norway2013": "Norway (2013)","turkey2010": "Turkey (2010)","turkey2003": "Turkey (2003)","georgia2007": "Georgia (2007)","serbia2012": "Serbia (2012)",}
-export const countryFlagMap = {"italy2012": "italy.png","thenetherlands2013": "netherlands.png","macedonia2004": "macedonia.png","russia2001": "russia.png","bosniaandherzegovina2009": "bosnia-and-herzegovina.png","spain1991": "spain.png","italy2021": "italy.png","ireland1987": "ireland.png","italy2019": "italy.png","greece2006": "greece.png","italy2013": "italy.png","iceland2019": "iceland.png","norway2015": "norway.png","germany2006": "germany.png","ireland1980": "ireland.png","latvia2000": "latvia.png","france2021": "france.png","iceland1991": "iceland.png","spain1973": "spain.png","france2017": "france.png","latvia2015": "latvia.png","norway2013": "norway.png","turkey2010": "turkey.png","turkey2003": "turkey.png","georgia2007": "georgia.png","serbia2012": "serbia.png",}
+export const countries = [
+  "albania", "latvia", "lithuania", "switzerland", "slovenia", "ukraine", "bulgaria", "netherlands", "moldova", "portugal", "croatia", "denmark", "austria", "iceland", "greece", "norway", "armenia"
+]
+export const countryNameMap = {
+  "albania":"Albania" ,
+    "latvia":"Latvia" ,
+    "lithuania":"Lithuania" ,
+    "switzerland":"Switzerland" ,
+    "slovenia":"Slovenia" ,
+    "ukraine":"Ukraine" ,
+    "bulgaria":"Bulgaria" ,
+    "netherlands":"Netherlands" ,
+    "moldova":"Moldova" ,
+    "portugal":"Portugal" ,
+    "croatia":"Croatia" ,
+    "denmark":"Denmark" ,
+    "austria":"Austria" ,
+    "iceland":"Iceland" ,
+    "greece":"Greece" ,
+    "norway":"Norway" ,
+    "armenia":"Armenia" ,
+}
+
+export const countryFlagMap = {
+  "albania":"albania.png" ,
+  "latvia":"latvia.png" ,
+  "lithuania":"lithuania.png" ,
+  "switzerland":"switzerland.png" ,
+  "slovenia":"slovenia.png" ,
+  "ukraine":"ukraine.png" ,
+  "bulgaria":"bulgaria.png" ,
+  "netherlands":"netherlands.png" ,
+  "moldova":"moldova.png" ,
+  "portugal":"portugal.png" ,
+  "croatia":"croatia.png" ,
+  "denmark":"denmark.png" ,
+  "austria":"austria.png" ,
+  "iceland":"iceland.png" ,
+  "greece":"greece.png" ,
+  "norway":"norway.png" ,
+  "armenia":"armenia.png" }
 export const videomap = {"italy2012": "01.m4v","thenetherlands2013": "02.m4v","macedonia2004": "03.m4v","russia2001": "04.m4v","bosniaandherzegovina2009": "05.m4v","spain1991": "06.m4v","italy2021": "07.m4v","ireland1987": "08.m4v","italy2019": "09.m4v","greece2006": "10.m4v","italy2013": "11.m4v","iceland2019": "12.m4v","norway2015": "13.m4v","germany2006": "14.m4v","ireland1980": "15.m4v","latvia2000": "16.m4v","france2021": "17.m4v","iceland1991": "18.m4v","spain1973": "19.m4v","france2017": "20.m4v","latvia2015": "21.m4v","norway2013": "22.m4v","turkey2010": "23.m4v","turkey2003": "24.m4v","georgia2007": "25.m4v","serbia2012": "26.m4v",}
 
 export const rankToPointsMap = {
