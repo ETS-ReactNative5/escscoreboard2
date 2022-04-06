@@ -39,7 +39,23 @@ export const countryFlagMap = {
   "greece":"greece.png" ,
   "norway":"norway.png" ,
   "armenia":"armenia.png" }
-export const videomap = {"italy2012": "01.m4v","thenetherlands2013": "02.m4v","macedonia2004": "03.m4v","russia2001": "04.m4v","bosniaandherzegovina2009": "05.m4v","spain1991": "06.m4v","italy2021": "07.m4v","ireland1987": "08.m4v","italy2019": "09.m4v","greece2006": "10.m4v","italy2013": "11.m4v","iceland2019": "12.m4v","norway2015": "13.m4v","germany2006": "14.m4v","ireland1980": "15.m4v","latvia2000": "16.m4v","france2021": "17.m4v","iceland1991": "18.m4v","spain1973": "19.m4v","france2017": "20.m4v","latvia2015": "21.m4v","norway2013": "22.m4v","turkey2010": "23.m4v","turkey2003": "24.m4v","georgia2007": "25.m4v","serbia2012": "26.m4v",}
+export const videomap = {"albania":"01-albania.m4v" ,
+"latvia":"02-latvia.m4v" ,
+"lithuania":"03-lithuania.m4v" ,
+"switzerland":"04-switzerland.m4v" ,
+"slovenia":"05-slovenia.m4v" ,
+"ukraine":"06-ukraine.m4v" ,
+"bulgaria":"07-bulgaria.m4v" ,
+"netherlands":"08-netherlands.m4v" ,
+"moldova":"09-moldova.m4v" ,
+"portugal":"10-portugal.m4v" ,
+"croatia":"11-croatia.m4v" ,
+"denmark":"12-denmark.m4v" ,
+"austria":"13-austria.m4v" ,
+"iceland":"14-iceland.m4v" ,
+"greece":"15-greece.m4v" ,
+"norway":"16-norway.m4v" ,
+"armenia":"17-armenia.m4v"}
 
 export const rankToPointsMap = {
   1: 12,
