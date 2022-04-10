@@ -45,7 +45,7 @@ h1 {
   font-size: 40px;
   margin: 0;
   font-family: "Arsenica";
-  color: #F4FC48;
+  color: #FFF;
   background-color: #272238;
   padding: 24px;
   display: flex;
@@ -201,7 +201,7 @@ h1 {
           display: inline-block;
           width: 16px;
           height: 16px;
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:24px;height:24px' viewBox='0 0 24 24'%3E%3Cpath fill='%23F4FC48' d='M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z' /%3E%3C/svg%3E");
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:24px;height:24px' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFF' d='M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z' /%3E%3C/svg%3E");
         }
       }
       &__current-rank {
@@ -217,7 +217,7 @@ h1 {
         z-index: 5;
         border: none;
         background-color: #272238;
-        color: #F4FC48;
+        color: #FFF;
         & + .country__flag {
           visibility: hidden;
         }
@@ -225,7 +225,7 @@ h1 {
     }
   }
   &--3 {
-    background-color: #F4FC48;
+    background-color: #FFF;
     color: #272238;
     .country {
       &__rank {
@@ -233,7 +233,7 @@ h1 {
         
       }
       &__current-rank {
-        background-color: #F4FC48;
+        background-color: #FFF;
         color: #272238;
       }
       &__average {
@@ -254,6 +254,9 @@ h1 {
   align-items: center;
   padding: 24px;
   background-color: #272238;
+  background-image: url("img/overlay.webp");
+  background-position: right center;
+  background-repeat: no-repeat;
   > div {
     columns: 2;
     column-gap: 8px;
@@ -285,7 +288,7 @@ button {
 
 .Button {
   &--12 {
-    background-color: #F4FC48;
+    background-color: #FFF;
     color: #272238;
   }
 }
