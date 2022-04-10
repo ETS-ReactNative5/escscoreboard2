@@ -1,7 +1,8 @@
-export const countries = ["finland", "israel", "serbia", "azerbaijan", "georgia", "malta", "san-marino", "australia", "cyprus", "ireland", "north-macedonia", "estonia", "romania", "poland", "montenegro", "belgium", "sweden", "czech-republic",
+export const countries = ["france", "germany", "austria", "estonia", "ukraine", "greece", "romania", "serbia", "italy",
+  "norway", "australia", "albania", "united-kingdom", "croatia", "north-macedonia", "finland", "portugal", "cyprus", "czech-republic", "armenia", "sweden", "poland", "lithuania", "spain", "the-netherlands"
 ]
 export const countryNameMap = {
-  "finland":"Finland" ,
+    "finland":"Finland" ,
     "israel":"Israel" ,
     "serbia":"Serbia" ,
     "azerbaijan":"Azerbaijan" ,
@@ -19,6 +20,8 @@ export const countryNameMap = {
     "belgium":"Belgium" ,
     "sweden":"Sweden" ,
     "czech-republic":"Czech Republic",
+  "france": "France", "germany": "Germany", "austria": "Austria",  "ukraine": "Ukraine", "greece": "Greece","italy": "Italy",
+  "norway": "Norway", "albania": "Albania", "united-kingdom": "United Kingdom", "croatia": "Croatia",  "portugal": "Portugal","armenia": "Armenia", "lithuania": "Lithuania", "spain": "Spain", "the-netherlands": "The Netherlands"
 }
 
 export const countryFlagMap = {
@@ -39,7 +42,10 @@ export const countryFlagMap = {
     "montenegro":"montenegro.png" ,
     "belgium":"belgium.png" ,
     "sweden":"sweden.png" ,
-    "czech-republic":"czech-republic.png" }
+    "czech-republic":"czech-republic.png",
+  "france": "france.png", "germany": "germany.png", "austria": "austria.png",  "ukraine": "ukraine.png", "greece": "greece.png","italy": "italy.png",
+  "norway": "norway.png", "albania": "albania.png", "united-kingdom": "united-kingdom.png", "croatia": "croatia.png",
+  "portugal": "portugal.png","armenia": "armenia.png", "lithuania": "lithuania.png", "spain": "spain.png", "the-netherlands": "netherlands.png"}
 export const videomap = {
   "finland":"finland.mp4" ,
     "israel":"israel.mp4" ,
