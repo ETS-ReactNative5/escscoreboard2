@@ -19,7 +19,7 @@ const Profile = () => {
   const [leaderboard, setLeaderboard] = useState([]);
   const [myRank, setMyRank] = useState(0);
   const [myScore, setMyScore] = useState(0);
-  const [page, setPage] = useState("prediction");
+  const [page, setPage] = useState("eurovision");
   const [isSuperuser, setIsSuperuser] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -354,6 +354,19 @@ const Profile = () => {
             {isSuperuser ? (
               <nav className="navigation">
                 <button
+                    className={
+                      page === "eurovision"
+                          ? "btn btn--primary"
+                          : "btn btn--secondary"
+                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPage("eurovision");
+                    }}
+                >
+                  XTRA VOTE - ESC 2022
+                </button>
+                <button
                   className={
                     page === "prediction"
                       ? "btn btn--primary"
@@ -366,25 +379,12 @@ const Profile = () => {
                 >
                   Prediction
                 </button>
-                <button
-                  className={
-                    page === "eurovision"
-                      ? "btn btn--primary"
-                      : "btn btn--secondary"
-                  }
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setPage("eurovision");
-                  }}
-                >
-                  XTRA VOTE - ESC 2022
-                </button>
               </nav>
             ) : (
               <div></div>
             )}
-            {page === "prediction" ? <NFPrediction /> : ""}
             {page === "eurovision" ? <EurovisionVote /> : ""}
+            {page === "prediction" ? <NFPrediction /> : ""}
             <ToastContainer />
           </div>
         </div>

@@ -50,6 +50,7 @@ export function EurovisionVote() {
 
     console.log(items);
     setSongs(items);
+    sendVote()
   };
 
   const votingButtonComponent = (entry, index) => {
@@ -84,7 +85,7 @@ export function EurovisionVote() {
     })
       .then(handleErrors)
       .then((response) => {
-        toast("All good");
+        // toast("Ranking saved!", {autoClose: 800});
       })
       .catch((error) => {
         toast("baad");
@@ -171,9 +172,10 @@ export function EurovisionVote() {
             )}
           </Droppable>
         </DragDropContext>
-        <button className="btn btn--primary" onClick={() => sendVote()}>
-          Submit
-        </button>
+        <h5 color={"LightGray"}>Your ranking will be stored automatically!</h5>
+        {/*<button className="btn btn--primary" onClick={() => sendVote()}>*/}
+        {/*  Submit*/}
+        {/*</button>*/}
       </div>
     );
   };
